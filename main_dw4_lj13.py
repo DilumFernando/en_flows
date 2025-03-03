@@ -14,10 +14,10 @@ parser.add_argument('--model', type=str, default='simple_dynamics',
                     help='our_dynamics | schnet | simple_dynamics | kernel_dynamics | egnn_dynamics | gnn_dynamics')
 parser.add_argument('--data', type=str, default='lj13',
                     help='dw4 | lj13')
-parser.add_argument('--n_epochs', type=int, default=300)
-parser.add_argument('--batch_size', type=int, default=100)
+parser.add_argument('--n_epochs', type=int, default=100)
+parser.add_argument('--batch_size', type=int, default=10)
 parser.add_argument('--lr', type=float, default=5e-4)
-parser.add_argument('--n_data', type=int, default=1000,
+parser.add_argument('--n_data', type=int, default=100,
                     help="Number of training samples")
 parser.add_argument('--sweep_n_data', type=eval, default=False,
                     help="sweep n_data instead of using the provided parameter")
@@ -36,7 +36,7 @@ parser.add_argument('--n_layers', type=int, default=3,
 parser.add_argument('--name', type=str, default='debug')
 parser.add_argument('--wandb_usr', type=str, default='')
 parser.add_argument('--n_report_steps', type=int, default=1)
-parser.add_argument('--test_epochs', type=int, default=2)
+parser.add_argument('--test_epochs', type=int, default=10)
 parser.add_argument('--attention', type=eval, default=True,
                     help='use attention in the EGNN')
 parser.add_argument('--data_augmentation', type=eval, default=False,
@@ -53,6 +53,7 @@ if args.model == 'kernel_dynamics' and args.data == 'lj13':
 print(args)
 
 if args.data == 'dw4':
+    print(args.n_data)
     n_particles = 4
     n_dims = 2
     dim = n_particles * n_dims  # system dimensionality
@@ -65,11 +66,13 @@ else:
 
 
 def main():
+
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    print(f"using devide: {device}")
     prior = PositionPrior()  # set up prior
 
     flow = get_model(args, dim, n_particles)
-    if torch.cuda.is_available():
-        flow = flow.cuda()
+    flow = flow.to(device)
 
     # Log all args to wandb
     wandb.init(entity=args.wandb_usr, project='se3flows', name=args.name, config=args)
@@ -105,8 +108,7 @@ def main():
             if args.data_augmentation:
                 batch = utils.random_rotation(batch).detach()
 
-            if torch.cuda.is_available():
-                batch = batch.cuda()
+            batch = batch.to(device)
 
             optim.zero_grad()
 
@@ -145,14 +147,20 @@ def main():
             if val_loss < best_val_loss:
                 best_val_loss = val_loss
                 best_test_loss = test_loss
+
+                torch.save(flow.state_dict(), 'saved_models/best_model.pth')  
+                print(f"Model saved at epoch {epoch} with best validation loss.")
             print('Best val loss: %.4f \t Best test loss:  %.4f' % (best_val_loss, best_test_loss))
 
         print()  # Clear line
+
+    torch.save(flow.state_dict(), 'saved_models/final_model.pth')
 
     return best_test_loss
 
 
 def test(args, data_test, batch_iter_test, flow, prior, epoch, partition='test'):
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     # use OTD in the evaluation process
     flow._use_checkpoints = False
     if args.data == 'dw4':
@@ -164,8 +172,7 @@ def test(args, data_test, batch_iter_test, flow, prior, epoch, partition='test')
     with torch.no_grad():
         for it, batch_idxs in enumerate(batch_iter_test):
             batch = torch.Tensor(data_test[batch_idxs])
-            if torch.cuda.is_available():
-                batch = batch.cuda()
+            batch = batch.to(device)
             batch = batch.view(batch.size(0), n_particles, n_dims)
             if 'kernel_dynamics' in args.model:
                 loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll_kerneldynamics(args, flow, prior, batch,
@@ -182,6 +189,7 @@ def test(args, data_test, batch_iter_test, flow, prior, epoch, partition='test')
 
         # TODO: no evaluation on hold out data yet
     flow.set_trace(args.trace)
+
     return data_nll
 
 if __name__ == "__main__":
