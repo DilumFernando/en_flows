@@ -2,7 +2,7 @@ import torch
 import numpy as np
 
 from .autograd_utils import brute_force_jacobian_trace, brute_force_jacobian
-from .distances import distance_vectors, distances_from_vectors, distance_vectors_v2, diagonal_filter
+from .distances import distance_vectors, distances_from_vectors, distance_vectors_v2, diagonal_filter, inner_prods
 from .shape_utils import tile
 from .particle_utils import remove_mean
 
@@ -678,8 +678,6 @@ class KernelDynamics(torch.nn.Module):
         if optimize_t_gammas:
             self._neg_log_gammas_time = torch.nn.Parameter(self._neg_log_gammas_time)
         
-        
-        
         self._weights = torch.nn.Parameter(
             torch.Tensor(self._n_kernels, self._n_out).normal_() * np.sqrt(1. / self._n_kernels)
         )
@@ -702,7 +700,7 @@ class KernelDynamics(torch.nn.Module):
         
         force_mag = (rbfs + importance.pow(2).view(1, 1, 1, -1)) @ self._weights + self._bias
         if derivative:
-            d_force_mag = (d_rbfs) @ self._weights
+            d_force_mag = d_rbfs @ self._weights
         else:
             d_force_mag = None
         if self._mus_time is not None:
@@ -728,6 +726,99 @@ class KernelDynamics(torch.nn.Module):
 
         if compute_divergence:
             divergence = (d * d_force_mag + self._n_dimensions * force_mag).view(n_batch, -1).sum(dim=-1)
+            divergence = divergence.unsqueeze(-1)
+        else:
+            divergence = None
+
+        # forces.size() --> (n_batch, n_particles * n_dimensions)
+        # divergence.size() --> (n_batch, 1)
+        return forces, divergence
+
+class KernelDynamics_inner(torch.nn.Module):
+    
+    def __init__(self, n_particles, n_dimensions, 
+                 mus, gammas, 
+                 mus_time=None, gammas_time=None,
+                 optimize_d_gammas=False,
+                 optimize_t_gammas=False):
+        super().__init__()
+        self._n_particles = n_particles
+        self._n_dimensions = n_dimensions
+
+        self.register_buffer('_mus', mus)
+        self.register_buffer('_neg_log_gammas', -torch.log(gammas))
+        self._n_kernels = self._mus.shape[0]
+
+        self.register_buffer('_mus_time', mus_time)
+        self.register_buffer('_neg_log_gammas_time', -torch.log(gammas_time))
+
+        if self._mus_time is None:
+            self._n_out = 1
+        else:
+            assert self._neg_log_gammas_time is not None and self._neg_log_gammas_time.shape[0] == self._mus_time.shape[0]
+            self._n_out = self._mus_time.shape[0]
+        
+        if optimize_d_gammas:
+            self._neg_log_gammas = torch.nn.Parameter(self._neg_log_gammas)
+            
+        if optimize_t_gammas:
+            self._neg_log_gammas_time = torch.nn.Parameter(self._neg_log_gammas_time)
+        
+        
+        
+        self._weights = torch.nn.Parameter(
+            torch.Tensor(self._n_kernels, self._n_out).normal_() * np.sqrt(1. / self._n_kernels)
+        )
+        self._bias = torch.nn.Parameter(
+            torch.Tensor(1, self._n_out).zero_()
+        )
+        
+        self._importance = torch.nn.Parameter(
+            torch.Tensor(self._n_kernels).zero_()
+        )
+
+    def before_ode(self):
+        pass
+        
+    def _force_mag(self, t, d, derivative=False):
+        
+        importance = self._importance
+        
+        rbfs, d_rbfs = rbf_kernels(d, self._mus, self._neg_log_gammas, derivative=derivative)    
+
+        force_mag = d * (rbfs + importance.pow(2).view(1, 1, 1, -1)) @ self._weights + self._bias
+        if derivative:
+            d_force_mag = (d * (d_rbfs) + rbfs) @ self._weights
+        else:
+            d_force_mag = None
+        if self._mus_time is not None:
+            trbfs, _ = rbf_kernels(t, self._mus_time, self._neg_log_gammas_time)
+            force_mag = (force_mag * trbfs).sum(dim=-1, keepdim=True)
+            if derivative:
+                d_force_mag = (d_force_mag * trbfs).sum(dim=-1, keepdim=True)
+        return force_mag, d_force_mag
+
+
+
+    def forward(self, t, x, compute_divergence=True):
+        n_batch = x.shape[0] # size = (n_batch, n_particles * n_dimensions)
+
+        x = x.view(n_batch, self._n_particles, self._n_dimensions)
+
+        d = inner_prods(x).unsqueeze(dim=-1) # (B, N, N, 1)
+        
+        force_mag, d_force_mag = self._force_mag(t, d, derivative=compute_divergence) # both with shapes (B, N, N, 1)
+        force_mag = force_mag.squeeze(dim=-1) # (B, N, N, 1) => (B, N, N)
+        d_force_mag = d_force_mag.squeeze(dim=-1) # (B, N, N, 1) => (B, N, N)
+        forces = (force_mag @ x) # (B, N, N) @ (B, N, D) => (B, N, D)
+        forces = forces.view(n_batch, -1)
+
+        if compute_divergence:
+            divergence_1 = self._n_dimensions * torch.einsum("bii->b", force_mag)
+            d_diag = d.squeeze(dim=-1).diagonal().unsqueeze(dim=-1)
+            divergence_2 = (d_diag * d_force_mag.T).sum()
+            divergence = divergence_1 + divergence_2
+            # divergence = (d * d_force_mag + self._n_dimensions * force_mag).view(n_batch, -1).sum(dim=-1)
             divergence = divergence.unsqueeze(-1)
         else:
             divergence = None

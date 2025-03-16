@@ -82,6 +82,8 @@ def distance_vectors_v2(x, y, remove_diagonal=True):
         )
     return r
 
+def inner_prods(x):
+    return torch.bmm(x, x.transpose(1, 2))
 
 def distances_from_vectors(r, eps=1e-6):
     return (r.pow(2).sum(dim=-1) + eps).sqrt()

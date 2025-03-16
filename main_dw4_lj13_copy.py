@@ -10,6 +10,7 @@ from dw4_experiment.dataset import get_data
 from dw4_experiment.models import get_model
 from flows.distributions import PositionPrior
 from flows.utils import remove_mean
+import os
 
 
 parser = argparse.ArgumentParser(description='SE3')
@@ -99,12 +100,20 @@ def main():
     best_val_loss = 1e8
     best_test_loss = 1e8
 
+    log_path = f"{args.data}_logs/training_log_inner_n_data_{args.n_data}.txt"
+    os.makedirs(os.path.dirname(log_path), exist_ok=True)
+    with open(log_path, 'a'):
+        pass
+
+    save_dir_best = f'saved_models_{args.data}/best_model_inner_n_data_{args.n_data}.pth'
+    os.makedirs(os.path.dirname(save_dir_best) , exist_ok=True)
+    
     # Set up logging
     logging.basicConfig(
         level=logging.INFO,  # Set log level to INFO to capture detailed information
         format='%(asctime)s - %(levelname)s - %(message)s',
         handlers=[
-            logging.FileHandler(f"{args.data}_logs/training_log_n_data_{args.n_data}.txt"),  # Log to a file named 'training_log.txt'
+            logging.FileHandler(log_path),  # Log to a file named 'training_log.txt'
             logging.StreamHandler()  # Log to the console
         ]
     )
@@ -156,7 +165,6 @@ def main():
             if val_loss < best_val_loss:
                 best_val_loss = val_loss
                 best_test_loss = test_loss
-                save_dir_best = f'saved_models_{args.data}/best_model_n_data_{args.n_data}.pth'
                 torch.save(flow.state_dict(), save_dir_best)  
                 logging.info(f"Model saved at epoch {epoch} with best validation loss.")
             
@@ -198,7 +206,7 @@ def test(args, data_test, batch_iter_test, flow, prior, epoch, partition='test')
 
         print()
         print(f'%s nll {data_nll}' % partition)
-        # wandb.log({"Test NLL": data_nll}, commit=False)
+        wandb.log({"Test NLL": data_nll}, commit=False)
 
         # TODO: no evaluation on hold out data yet
     flow.set_trace(args.trace)
@@ -238,3 +246,4 @@ if __name__ == "__main__":
                   "###########################\n")
     else:
         main()
+

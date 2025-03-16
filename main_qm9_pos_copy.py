@@ -5,6 +5,7 @@ import utils
 import wandb
 import time
 import logging
+import os
 from dw4_experiment import losses
 from dw4_experiment.models import get_model
 from flows.distributions import PositionPrior
@@ -95,13 +96,13 @@ def main():
     best_val_loss = 1e8
     best_test_loss = 1e8
     best_kl_div, best_js_div = 1e10, 1e10
-
+    
     # Set up logging
     logging.basicConfig(
         level=logging.INFO,  # Set log level to INFO to capture detailed information
         format='%(asctime)s - %(levelname)s - %(message)s',
         handlers=[
-            logging.FileHandler("qm9pos_logs/training_log_inner_100_epochs.txt"),  # Log to a file named 'training_log.txt'
+            logging.FileHandler("qm9pos_logs/training_log_100_epochs.txt"),  # Log to a file named 'training_log.txt'
             logging.StreamHandler()  # Log to the console
         ]
     )
@@ -122,11 +123,9 @@ def main():
             optim.zero_grad()
 
             # transform batch through flow
-            if 'kernel_dynamics' in args.model:
-                loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll_kerneldynamics(args, flow, prior, batch, n_particles, n_dims)
-            # if args.model == 'kernel_dynamics':
-            #     loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll_kerneldynamics(args, flow, prior, batch,
-            #                                                                                  n_particles, n_dims)
+            if args.model == 'kernel_dynamics':
+                loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll_kerneldynamics(args, flow, prior, batch,
+                                                                                             n_particles, n_dims)
             else:
                 loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll(args, flow, prior, batch)
             # standard nll from forward KL
@@ -172,7 +171,7 @@ def main():
                 best_test_loss = test_loss
                 best_kl_div = kl_div
                 best_js_div = js_div
-                torch.save(flow.state_dict(), 'saved_models_qm9pos/best_model_inner_100_epochs.pth')  
+                torch.save(flow.state_dict(), 'saved_models_qm9pos/best_model_100_epochs.pth')  
                 logging.info(f"Model saved at epoch {epoch} with best validation loss.")
             
             logging.info(f"Best val loss: {best_val_loss:.4f} \t Best test loss: {best_test_loss:.4f}")
@@ -185,7 +184,7 @@ def main():
         logging.info("-" * 50)  # Separator for each epoch
 
     # Save the final model
-    torch.save(flow.state_dict(), 'saved_models_qm9pos/final_model_inner_100_epochs.pth')
+    torch.save(flow.state_dict(), 'saved_models_qm9pos/final_model_100_epochs.pth')
     logging.info("Final model saved.")
             #     if args.save_model:
             #         utils.save_model(flow, 'outputs/%s/flow.npy' % args.exp_name)
@@ -200,7 +199,7 @@ def main():
     return best_test_loss
 
 
-def test(args, device, dataloader, flow, prior, epoch, partition='test'):
+def test(args, dataloader, flow, prior, epoch, partition='test'):
     # use OTD in the evaluation process
     # flow._use_checkpoints = False
     # flow.set_trace('exact')
@@ -212,13 +211,11 @@ def test(args, device, dataloader, flow, prior, epoch, partition='test'):
         for it, data in enumerate(dataloader):
             x = data['positions'].to(device, dtype)
             x = remove_mean(x)
-            x = x.to(device)
+            if torch.cuda.is_available():
+                x = x.cuda()
             x = x.view(x.size(0), n_particles, 3)
-            if 'kernel_dynamics' in args.model:
-                loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll_kerneldynamics(args, flow, prior, x,
-                                                                                             n_particles, n_dims)
-            # if args.model == 'kernel_dynamics':
-            #     _, nll, _, _ = losses.compute_loss_and_nll_kerneldynamics(args, flow, prior, x, n_particles, n_dims)
+            if args.model == 'kernel_dynamics':
+                _, nll, _, _ = losses.compute_loss_and_nll_kerneldynamics(args, flow, prior, x, n_particles, n_dims)
             else:
                 _, nll, _, _ = losses.compute_loss_and_nll(args, flow, prior, x)
 

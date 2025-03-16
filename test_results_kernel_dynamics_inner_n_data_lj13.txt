@@ -1,0 +1,6 @@
+
+### Testing Results for Model: kernel_dynamics_inner, Data: lj13 ###
+n_data = 10, Test Loss = -21.1427
+n_data = 100, Test Loss = -40.5531
+n_data = 1000, Test Loss = -18.4755
+n_data = 10000, Test Loss = -32.4867

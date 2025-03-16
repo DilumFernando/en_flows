@@ -1,0 +1,6 @@
+
+### Testing Results for Model: kernel_dynamics, Data: dw4 ###
+n_data = 100, Test Loss = 8.8233
+n_data = 1000, Test Loss = 8.6446
+n_data = 10000, Test Loss = 8.4430
+n_data = 100000, Test Loss = 8.2763

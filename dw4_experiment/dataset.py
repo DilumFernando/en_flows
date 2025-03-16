@@ -32,7 +32,6 @@ def get_data_dw4(n_data, partition, batch_size, n_particles_test=1000, n_particl
 
     # used once to reshuffle for cutting the data (he just uses 1000 samples)
 
-
     # The mean is computed per each set of nodes in each sample
     data = remove_mean(data, n_particles, dim // n_particles)
 
@@ -94,7 +93,7 @@ def plot_data(sample):
     plt.show()
 
 if __name__ == "__main__":
-    n_samples = 100
+    n_samples = 1000
     data, _ = get_data_dw4(n_samples, 'train')
     data = data.view(n_samples, 4, 2)
     for i in range(n_samples):

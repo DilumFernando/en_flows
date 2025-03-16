@@ -8,7 +8,7 @@ from deprecated.eqnode.densenet import DenseNet
 from deprecated.eqnode.dynamics import SchNet, SimpleEqDynamics
 from flows.ffjord import FFJORD
 from deprecated.eqnode.kernels import RbfEncoder
-from deprecated.eqnode.dynamics import KernelDynamics
+from deprecated.eqnode.dynamics import KernelDynamics, KernelDynamics_inner
 
 
 def get_model(args, dim, n_particles):
@@ -119,6 +119,22 @@ def get_model(args, dim, n_particles):
                                   optimize_t_gammas=True,
                                   mus_time=mus_time,
                                   gammas_time=gammas_time)
+        
+        flow = DiffEqFlow(dynamics=dynamics)
+    elif args.model == "kernel_dynamics_inner":
+        n_dimension = dim // n_particles
+        d_max = 8
+        n_rbfs = 50
+        mus = torch.linspace(0, d_max, n_rbfs)
+        mus.sort()
+        gammas = 0.5 * torch.ones(n_rbfs)
+        mus_time = torch.linspace(0, 1, 10)
+        gammas_time = 0.3 * torch.ones(10)
+        dynamics = KernelDynamics_inner(n_particles, n_dimension, mus, gammas,
+                                  optimize_d_gammas=True,
+                                  optimize_t_gammas=True,
+                                  mus_time=mus_time,
+                                  gammas_time=gammas_time)
     # elif args.model == 'our_dynamics_reimplementation':
     #     net_dynamics = OurDynamics(
     #         n_particles=n_particles,
@@ -152,6 +168,23 @@ def get_model(args, dim, n_particles):
         gain = 0.3 + 2 * ((mus_time - 0.5) / 2).pow(2)
         gammas_time = compute_gammas(mus_time, gain=gain)
         kdyn = KernelDynamics(n_particles, n_dimension, mus, gammas, optimize_d_gammas=True, optimize_t_gammas=True,
+                              mus_time=mus_time, gammas_time=gammas_time)
+
+        flow = ContinuousNormalizingFlow(kdyn, integrator="dopri5", n_time_steps=2, step_size=1. / 100)
+    
+    elif args.model == "kernel_dynamics_lj13_inner":
+        n_dimension = dim // n_particles
+        d_max = 16
+        mus = torch.linspace(0, d_max, 50)
+        gain = 0.2 + 10 * ((mus / d_max - 1.5 / d_max) / 2).pow(2)
+        mus = 2 * ((mus / d_max - 1.5 / d_max) / 2).pow(2) * d_max
+        mus = mus.sort()[0]
+        gammas = (0.3 + 3 * ((mus / d_max - 1.5 / d_max) / 2).pow(2) * d_max)
+
+        mus_time = torch.linspace(0, 1, 10)
+        gain = 0.3 + 2 * ((mus_time - 0.5) / 2).pow(2)
+        gammas_time = compute_gammas(mus_time, gain=gain)
+        kdyn = KernelDynamics_inner(n_particles, n_dimension, mus, gammas, optimize_d_gammas=True, optimize_t_gammas=True,
                               mus_time=mus_time, gammas_time=gammas_time)
 
         flow = ContinuousNormalizingFlow(kdyn, integrator="dopri5", n_time_steps=2, step_size=1. / 100)

@@ -23,6 +23,7 @@ def remove_mean_with_mask(x, node_mask):
 
 def assert_mean_zero(x):
     mean = torch.mean(x, dim=1, keepdim=True)
+    print(mean.abs().max().item())
     assert mean.abs().max().item() < 1e-4
 
 
