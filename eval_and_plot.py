@@ -108,19 +108,17 @@ def plot_generating_flow(args, data, flow, prior, target):
     samples = 10000
     latent = prior.sample(size=[samples, 4, 2], device=device)
     #latent = prior.sample(500)
-    if 'inner' in args.model:
-        x, dlogp = flow(latent, brute_force=True, inverse=True)
-    else:
-        x, dlogp = flow(latent, brute_force=False, inverse=True)
+    x, dlogp = flow(latent, brute_force=False, inverse=True)
 
     x = x.view(samples, -1)
     latent = latent.view(samples, -1)
+
     energies_data = target.energy(data[:samples]).numpy()
     energies_bg = target.energy(x).cpu().detach().view(-1).numpy()
-    # energies_prior = target.energy(latent).cpu().detach().numpy()
+    energies_prior = target.energy(latent).cpu().detach().numpy()
     min_energy = min(energies_data.min(), energies_bg.min())
 
-    # log_w = target.energy(x).view(-1) - prior.energy(latent).view(-1) + dlogp.view(-1)
+    # log_w = target.energy(x).view(-1) - prior(latent.view(samples, 4, 2)).view(-1) + dlogp.view(-1)
     # log_w = log_w.view(-1).cpu().detach()
 
     # plt.hist(log_w, bins=100, density=True, )
