@@ -804,10 +804,12 @@ class KernelDynamics_inner(torch.nn.Module):
         n_batch = x.shape[0] # size = (n_batch, n_particles * n_dimensions)
 
         x = x.view(n_batch, self._n_particles, self._n_dimensions)
-
+        r = distance_vectors(x, remove_diagonal=False)
         d = inner_prods(x).unsqueeze(dim=-1) # (B, N, N, 1)
         
         force_mag, d_force_mag = self._force_mag(t, d, derivative=compute_divergence) # both with shapes (B, N, N, 1)
+        forces = (r * force_mag).sum(dim=-2)
+        forces = forces.view(n_batch, -1)
 
         if compute_divergence:
             divergence = (d * d_force_mag + self._n_dimensions * force_mag).view(n_batch, -1).sum(dim=-1)

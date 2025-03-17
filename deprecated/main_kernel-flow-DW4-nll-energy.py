@@ -14,11 +14,18 @@ from eqnode.test_systems import MultiDoubleWellPotential
 from eqnode.particle_utils import remove_mean
 from eqnode.bg import DiffEqFlow
 from eqnode.priors import MeanFreeNormalPrior
+from dw4_experiment import losses
+from dw4_experiment.dataset import get_data
+from dw4_experiment.models import get_model
+from flows.distributions import PositionPrior
+from flows.utils import remove_mean
+import os
 import argparse
 
 parser = argparse.ArgumentParser(description='SE3')
-parser.add_argument('--model', type=str, default='kernel_dynamics',
-                    help='our_dynamics | kernel_dynamics')
+# parser.add_argument('--model', type=str, default='kernel_dynamics',
+#                     help='our_dynamics | kernel_dynamics')
+parser.add_argument('--model_path', type=str)
 args = parser.parse_args()
 
 #check if cuda is available
@@ -38,7 +45,7 @@ offset = 4
 target = MultiDoubleWellPotential(dim, n_particles, a, b, c, offset)
 
 # Load dataset
-data, idx = np.load("MCMC_data/dw4-dataidx.npy", allow_pickle=True)
+data, idx = np.load("dw4_experiment/data/dw4-dataidx.npy", allow_pickle=True)
 idx = np.random.choice(len(data), len(data), replace=False)
 data = data.reshape(-1, dim)
 data  = remove_mean(data, n_particles, dim // n_particles)
@@ -236,7 +243,7 @@ def train_generating_flows():
     plot_generating_flow()
 
 
-def plot_generating_flow():
+def plot_generating_flow(model_path, prior):
     # use OTD in the evaluation process
     flow._use_checkpoints = False
 
@@ -270,11 +277,15 @@ def plot_generating_flow():
     plt.xticks(fontsize=45)
     plt.yticks(fontsize=45);
     plt.legend(fontsize=25);
-    plt.show()  # change by savefig
+    plt.savefig("generated_flows")  # Save plot as an image
+    plt.close() 
+    # plt.show()  # change by savefig
 
 def main():
-    training_nll()
-    train_generating_flows()
+    # training_nll()
+    # train_generating_flows()
+
+    plot_generating_flow(args.model_path, prior = PositionPrior())
 
 
 if __name__ == "__main__":
