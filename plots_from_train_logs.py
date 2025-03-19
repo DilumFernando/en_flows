@@ -2,11 +2,11 @@ import re
 import matplotlib.pyplot as plt
 
 # Paths to the training log files
-n_data = 100
-data = 'lj13'
-log_file_1 = f"{data}_logs/training_log_n_data_{n_data}.txt"  
+n_data = 1000
+data = 'dw4'
+log_file_1 = f"{data}_logs_incorrect/training_log_n_data_{n_data}.txt"  
 log_file_2 = f"{data}_logs/training_log_inner_n_data_{n_data}.txt"  
-plot_file = f"{data}_images/training_losses_plot_n_data_{n_data}.png"  
+plot_file = f"{data}_images/training_losses_plot_n_data_new_inner{n_data}.png"  
 
 # Initialize lists to store extracted data for both log files
 epochs_1 = []

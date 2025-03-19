@@ -42,10 +42,10 @@ def load_and_test_model(args, model_path, n_particles, n_dims):
     prior = PositionPrior()
 
     # Calculate test loss
-    test_loss = test(args, data_test, batch_iter_test, flow, prior, epoch=0, partition='test')
-    print(f"Test Loss for {model_path}: {test_loss:.4f}")
+    # test_loss = test(args, data_test, batch_iter_test, flow, prior, epoch=0, partition='test')
+    # print(f"Test Loss for {model_path}: {test_loss:.4f}")
 
-    return flow, prior, test_loss
+    return flow, prior
 
 def plot_distance_hist(x, n_particles, n_dimensions, bins=100, xs=None, ys=None):
     if not isinstance(x, torch.Tensor):
@@ -140,7 +140,7 @@ def plot_generating_flow(args, data, flow, prior, target):
     plt.yticks(fontsize=10)
     plt.legend(fontsize=10)
     if 'inner' in args.model:
-        plt.savefig(f"generated_flows_inner_{args.n_data_list[0]}")
+        plt.savefig(f"generated_flows_inner_new_{args.n_data_list[0]}")
     else:
         plt.savefig(f"generated_flows_{args.n_data_list[0]}")
     plt.close() 
@@ -161,7 +161,7 @@ def main():
     # Set dataset and model directory
     if args.data == 'dw4':
         n_particles, n_dims = 4, 2
-        model_dir = 'incorrect_models_dw4'
+        model_dir = 'saved_models_dw4'
     elif args.data == 'lj13':
         n_particles, n_dims = 13, 3
         model_dir = 'incorrect_models_lj13'
@@ -198,15 +198,16 @@ def main():
         for n_data in args.n_data_list:
             if 'inner' in args.model:
                 model_path = f"{model_dir}/best_model_inner_n_data_{n_data}.pth"
+                print(f"{model_path}")
             else:
                 model_path = f"{model_dir}/best_model_n_data_{n_data}.pth"
                 print(f"{model_path}")
 
             args.n_data = n_data
-            flow, prior, test_loss = load_and_test_model(args, model_path, n_particles, n_dims)
+            flow, prior = load_and_test_model(args, model_path, n_particles, n_dims)
             data, target = dw4_data_and_target()
             plot_generating_flow(args, data, flow, prior, target)
-            print(test_loss)
+            # print(test_loss)
 
 
 if __name__ == "__main__":

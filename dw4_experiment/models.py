@@ -8,7 +8,7 @@ from deprecated.eqnode.densenet import DenseNet
 from deprecated.eqnode.dynamics import SchNet, SimpleEqDynamics
 from flows.ffjord import FFJORD
 from deprecated.eqnode.kernels import RbfEncoder
-from deprecated.eqnode.dynamics import KernelDynamics, KernelDynamics_inner
+from deprecated.eqnode.dynamics import KernelDynamics, KernelDynamics_inner, KernelDynamics_inner_old
 
 
 def get_model(args, dim, n_particles):
