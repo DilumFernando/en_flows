@@ -814,8 +814,11 @@ class KernelDynamics_inner_old(torch.nn.Module):
         norms = (x * x).sum(dim=-1, keepdim=True)
         inner_prods = x @ x.permute(0, 2, 1) 
 
+        sums = x.sum(dim=-1, keepdim=True)
+        d = sums + sums.permute(0, 2, 1) + 1e-6
+
         # d = (norms + norms.permute(0, 2, 1)).sqrt()
-        d = (torch.square(inner_prods) + 1e-6).sqrt()
+        # d = (torch.square(inner_prods) + 1e-6).sqrt()
         # d = (norms - 2 * inner_prods + norms.permute(0, 2, 1) + 1e-6).sqrt()
 
         mask = ~torch.eye(self._n_particles, device=x.device, dtype=torch.bool).expand(n_batch, -1, -1)
