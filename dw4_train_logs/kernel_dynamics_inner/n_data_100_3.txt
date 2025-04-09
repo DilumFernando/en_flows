@@ -1,0 +1,420 @@
+2025-04-01 12:49:20,999 - INFO - Epoch: 0, Iter: 0/1, NLL: 16.5224, Reg term: 0.000, Total Grad Norm: 21.419841
+2025-04-01 12:49:20,999 - INFO - Epoch 0 Mean Train NLL: 16.5224
+2025-04-01 12:49:52,396 - INFO - Epoch: 1, Iter: 0/1, NLL: 16.3911, Reg term: 0.000, Total Grad Norm: 20.236943
+2025-04-01 12:49:52,396 - INFO - Epoch 1 Mean Train NLL: 16.3911
+2025-04-01 12:49:57,523 - INFO - Epoch: 2, Iter: 0/1, NLL: 16.2679, Reg term: 0.000, Total Grad Norm: 19.918440
+2025-04-01 12:49:57,523 - INFO - Epoch 2 Mean Train NLL: 16.2679
+2025-04-01 12:50:03,059 - INFO - Epoch: 3, Iter: 0/1, NLL: 16.1462, Reg term: 0.000, Total Grad Norm: 19.610804
+2025-04-01 12:50:03,059 - INFO - Epoch 3 Mean Train NLL: 16.1462
+2025-04-01 12:50:08,937 - INFO - Epoch: 4, Iter: 0/1, NLL: 16.0269, Reg term: 0.000, Total Grad Norm: 19.588960
+2025-04-01 12:50:08,937 - INFO - Epoch 4 Mean Train NLL: 16.0269
+2025-04-01 12:50:14,707 - INFO - Epoch: 5, Iter: 0/1, NLL: 15.9037, Reg term: 0.000, Total Grad Norm: 20.943834
+2025-04-01 12:50:14,708 - INFO - Epoch 5 Mean Train NLL: 15.9037
+2025-04-01 12:50:21,212 - INFO - Epoch: 6, Iter: 0/1, NLL: 15.7709, Reg term: 0.000, Total Grad Norm: 22.410878
+2025-04-01 12:50:21,212 - INFO - Epoch 6 Mean Train NLL: 15.7709
+2025-04-01 12:50:27,531 - INFO - Epoch: 7, Iter: 0/1, NLL: 15.6329, Reg term: 0.000, Total Grad Norm: 22.466795
+2025-04-01 12:50:27,531 - INFO - Epoch 7 Mean Train NLL: 15.6329
+2025-04-01 12:50:33,157 - INFO - Epoch: 8, Iter: 0/1, NLL: 15.4990, Reg term: 0.000, Total Grad Norm: 21.059096
+2025-04-01 12:50:33,157 - INFO - Epoch 8 Mean Train NLL: 15.4990
+2025-04-01 12:50:38,894 - INFO - Epoch: 9, Iter: 0/1, NLL: 15.3752, Reg term: 0.000, Total Grad Norm: 19.297504
+2025-04-01 12:50:38,894 - INFO - Epoch 9 Mean Train NLL: 15.3752
+2025-04-01 12:50:44,608 - INFO - Epoch: 10, Iter: 0/1, NLL: 15.2608, Reg term: 0.000, Total Grad Norm: 18.393569
+2025-04-01 12:50:44,608 - INFO - Epoch 10 Mean Train NLL: 15.2608
+2025-04-01 12:50:49,220 - INFO - Epoch: 11, Iter: 0/1, NLL: 15.1503, Reg term: 0.000, Total Grad Norm: 18.029046
+2025-04-01 12:50:49,220 - INFO - Epoch 11 Mean Train NLL: 15.1503
+2025-04-01 12:50:54,107 - INFO - Epoch: 12, Iter: 0/1, NLL: 15.0434, Reg term: 0.000, Total Grad Norm: 17.298409
+2025-04-01 12:50:54,107 - INFO - Epoch 12 Mean Train NLL: 15.0434
+2025-04-01 12:50:59,729 - INFO - Epoch: 13, Iter: 0/1, NLL: 14.9426, Reg term: 0.000, Total Grad Norm: 16.285450
+2025-04-01 12:50:59,730 - INFO - Epoch 13 Mean Train NLL: 14.9426
+2025-04-01 12:51:06,783 - INFO - Epoch: 14, Iter: 0/1, NLL: 14.8488, Reg term: 0.000, Total Grad Norm: 15.012781
+2025-04-01 12:51:06,783 - INFO - Epoch 14 Mean Train NLL: 14.8488
+2025-04-01 12:51:13,322 - INFO - Epoch: 15, Iter: 0/1, NLL: 14.7634, Reg term: 0.000, Total Grad Norm: 13.534413
+2025-04-01 12:51:13,322 - INFO - Epoch 15 Mean Train NLL: 14.7634
+2025-04-01 12:51:19,661 - INFO - Epoch: 16, Iter: 0/1, NLL: 14.6865, Reg term: 0.000, Total Grad Norm: 12.468173
+2025-04-01 12:51:19,661 - INFO - Epoch 16 Mean Train NLL: 14.6865
+2025-04-01 12:51:26,120 - INFO - Epoch: 17, Iter: 0/1, NLL: 14.6153, Reg term: 0.000, Total Grad Norm: 11.906942
+2025-04-01 12:51:26,121 - INFO - Epoch 17 Mean Train NLL: 14.6153
+2025-04-01 12:51:32,230 - INFO - Epoch: 18, Iter: 0/1, NLL: 14.5464, Reg term: 0.000, Total Grad Norm: 11.797567
+2025-04-01 12:51:32,230 - INFO - Epoch 18 Mean Train NLL: 14.5464
+2025-04-01 12:51:39,091 - INFO - Epoch: 19, Iter: 0/1, NLL: 14.4783, Reg term: 0.000, Total Grad Norm: 11.949505
+2025-04-01 12:51:39,091 - INFO - Epoch 19 Mean Train NLL: 14.4783
+2025-04-01 12:51:44,749 - INFO - Epoch: 20, Iter: 0/1, NLL: 14.4095, Reg term: 0.000, Total Grad Norm: 12.164007
+2025-04-01 12:51:44,749 - INFO - Epoch 20 Mean Train NLL: 14.4095
+2025-04-01 12:52:13,461 - INFO - Epoch: 21, Iter: 0/1, NLL: 14.3403, Reg term: 0.000, Total Grad Norm: 12.272206
+2025-04-01 12:52:13,461 - INFO - Epoch 21 Mean Train NLL: 14.3403
+2025-04-01 12:52:19,883 - INFO - Epoch: 22, Iter: 0/1, NLL: 14.2715, Reg term: 0.000, Total Grad Norm: 12.216927
+2025-04-01 12:52:19,883 - INFO - Epoch 22 Mean Train NLL: 14.2715
+2025-04-01 12:52:26,135 - INFO - Epoch: 23, Iter: 0/1, NLL: 14.2033, Reg term: 0.000, Total Grad Norm: 12.107823
+2025-04-01 12:52:26,136 - INFO - Epoch 23 Mean Train NLL: 14.2033
+2025-04-01 12:52:31,569 - INFO - Epoch: 24, Iter: 0/1, NLL: 14.1358, Reg term: 0.000, Total Grad Norm: 12.093153
+2025-04-01 12:52:31,569 - INFO - Epoch 24 Mean Train NLL: 14.1358
+2025-04-01 12:52:37,892 - INFO - Epoch: 25, Iter: 0/1, NLL: 14.0686, Reg term: 0.000, Total Grad Norm: 12.202870
+2025-04-01 12:52:37,892 - INFO - Epoch 25 Mean Train NLL: 14.0686
+2025-04-01 12:52:44,623 - INFO - Epoch: 26, Iter: 0/1, NLL: 14.0004, Reg term: 0.000, Total Grad Norm: 12.367568
+2025-04-01 12:52:44,624 - INFO - Epoch 26 Mean Train NLL: 14.0004
+2025-04-01 12:52:52,310 - INFO - Epoch: 27, Iter: 0/1, NLL: 13.9319, Reg term: 0.000, Total Grad Norm: 12.473417
+2025-04-01 12:52:52,310 - INFO - Epoch 27 Mean Train NLL: 13.9319
+2025-04-01 12:52:58,581 - INFO - Epoch: 28, Iter: 0/1, NLL: 13.8634, Reg term: 0.000, Total Grad Norm: 12.448392
+2025-04-01 12:52:58,581 - INFO - Epoch 28 Mean Train NLL: 13.8634
+2025-04-01 12:53:05,132 - INFO - Epoch: 29, Iter: 0/1, NLL: 13.7954, Reg term: 0.000, Total Grad Norm: 12.276398
+2025-04-01 12:53:05,132 - INFO - Epoch 29 Mean Train NLL: 13.7954
+2025-04-01 12:53:10,358 - INFO - Epoch: 30, Iter: 0/1, NLL: 13.7291, Reg term: 0.000, Total Grad Norm: 11.936424
+2025-04-01 12:53:10,359 - INFO - Epoch 30 Mean Train NLL: 13.7291
+2025-04-01 12:53:15,423 - INFO - Epoch: 31, Iter: 0/1, NLL: 13.6652, Reg term: 0.000, Total Grad Norm: 11.437206
+2025-04-01 12:53:15,424 - INFO - Epoch 31 Mean Train NLL: 13.6652
+2025-04-01 12:53:23,260 - INFO - Epoch: 32, Iter: 0/1, NLL: 13.6046, Reg term: 0.000, Total Grad Norm: 10.949070
+2025-04-01 12:53:23,260 - INFO - Epoch 32 Mean Train NLL: 13.6046
+2025-04-01 12:53:28,095 - INFO - Epoch: 33, Iter: 0/1, NLL: 13.5465, Reg term: 0.000, Total Grad Norm: 10.601395
+2025-04-01 12:53:28,095 - INFO - Epoch 33 Mean Train NLL: 13.5465
+2025-04-01 12:53:32,802 - INFO - Epoch: 34, Iter: 0/1, NLL: 13.4906, Reg term: 0.000, Total Grad Norm: 10.391659
+2025-04-01 12:53:32,803 - INFO - Epoch 34 Mean Train NLL: 13.4906
+2025-04-01 12:53:38,176 - INFO - Epoch: 35, Iter: 0/1, NLL: 13.4365, Reg term: 0.000, Total Grad Norm: 10.256584
+2025-04-01 12:53:38,176 - INFO - Epoch 35 Mean Train NLL: 13.4365
+2025-04-01 12:53:42,620 - INFO - Epoch: 36, Iter: 0/1, NLL: 13.3832, Reg term: 0.000, Total Grad Norm: 10.117960
+2025-04-01 12:53:42,620 - INFO - Epoch 36 Mean Train NLL: 13.3832
+2025-04-01 12:53:46,806 - INFO - Epoch: 37, Iter: 0/1, NLL: 13.3311, Reg term: 0.000, Total Grad Norm: 9.927109
+2025-04-01 12:53:46,807 - INFO - Epoch 37 Mean Train NLL: 13.3311
+2025-04-01 12:53:51,518 - INFO - Epoch: 38, Iter: 0/1, NLL: 13.2810, Reg term: 0.000, Total Grad Norm: 9.655080
+2025-04-01 12:53:51,518 - INFO - Epoch 38 Mean Train NLL: 13.2810
+2025-04-01 12:53:57,884 - INFO - Epoch: 39, Iter: 0/1, NLL: 13.2327, Reg term: 0.000, Total Grad Norm: 9.284578
+2025-04-01 12:53:57,884 - INFO - Epoch 39 Mean Train NLL: 13.2327
+2025-04-01 12:54:02,287 - INFO - Epoch: 40, Iter: 0/1, NLL: 13.1866, Reg term: 0.000, Total Grad Norm: 8.820839
+2025-04-01 12:54:02,287 - INFO - Epoch 40 Mean Train NLL: 13.1866
+2025-04-01 12:54:24,215 - INFO - Epoch: 41, Iter: 0/1, NLL: 13.1434, Reg term: 0.000, Total Grad Norm: 8.293872
+2025-04-01 12:54:24,215 - INFO - Epoch 41 Mean Train NLL: 13.1434
+2025-04-01 12:54:28,209 - INFO - Epoch: 42, Iter: 0/1, NLL: 13.1030, Reg term: 0.000, Total Grad Norm: 7.732809
+2025-04-01 12:54:28,209 - INFO - Epoch 42 Mean Train NLL: 13.1030
+2025-04-01 12:54:31,912 - INFO - Epoch: 43, Iter: 0/1, NLL: 13.0656, Reg term: 0.000, Total Grad Norm: 7.158862
+2025-04-01 12:54:31,912 - INFO - Epoch 43 Mean Train NLL: 13.0656
+2025-04-01 12:54:35,707 - INFO - Epoch: 44, Iter: 0/1, NLL: 13.0312, Reg term: 0.000, Total Grad Norm: 6.599693
+2025-04-01 12:54:35,708 - INFO - Epoch 44 Mean Train NLL: 13.0312
+2025-04-01 12:54:39,603 - INFO - Epoch: 45, Iter: 0/1, NLL: 12.9997, Reg term: 0.000, Total Grad Norm: 6.082886
+2025-04-01 12:54:39,603 - INFO - Epoch 45 Mean Train NLL: 12.9997
+2025-04-01 12:54:43,815 - INFO - Epoch: 46, Iter: 0/1, NLL: 12.9707, Reg term: 0.000, Total Grad Norm: 5.626391
+2025-04-01 12:54:43,815 - INFO - Epoch 46 Mean Train NLL: 12.9707
+2025-04-01 12:54:48,051 - INFO - Epoch: 47, Iter: 0/1, NLL: 12.9440, Reg term: 0.000, Total Grad Norm: 5.242274
+2025-04-01 12:54:48,051 - INFO - Epoch 47 Mean Train NLL: 12.9440
+2025-04-01 12:54:52,211 - INFO - Epoch: 48, Iter: 0/1, NLL: 12.9190, Reg term: 0.000, Total Grad Norm: 4.926744
+2025-04-01 12:54:52,212 - INFO - Epoch 48 Mean Train NLL: 12.9190
+2025-04-01 12:54:56,547 - INFO - Epoch: 49, Iter: 0/1, NLL: 12.8956, Reg term: 0.000, Total Grad Norm: 4.670875
+2025-04-01 12:54:56,548 - INFO - Epoch 49 Mean Train NLL: 12.8956
+2025-04-01 12:55:01,732 - INFO - Epoch: 50, Iter: 0/1, NLL: 12.8736, Reg term: 0.000, Total Grad Norm: 4.465895
+2025-04-01 12:55:01,732 - INFO - Epoch 50 Mean Train NLL: 12.8736
+2025-04-01 12:55:06,106 - INFO - Epoch: 51, Iter: 0/1, NLL: 12.8527, Reg term: 0.000, Total Grad Norm: 4.294253
+2025-04-01 12:55:06,107 - INFO - Epoch 51 Mean Train NLL: 12.8527
+2025-04-01 12:55:10,117 - INFO - Epoch: 52, Iter: 0/1, NLL: 12.8326, Reg term: 0.000, Total Grad Norm: 4.149616
+2025-04-01 12:55:10,117 - INFO - Epoch 52 Mean Train NLL: 12.8326
+2025-04-01 12:55:14,195 - INFO - Epoch: 53, Iter: 0/1, NLL: 12.8134, Reg term: 0.000, Total Grad Norm: 4.020811
+2025-04-01 12:55:14,195 - INFO - Epoch 53 Mean Train NLL: 12.8134
+2025-04-01 12:55:18,266 - INFO - Epoch: 54, Iter: 0/1, NLL: 12.7948, Reg term: 0.000, Total Grad Norm: 3.903523
+2025-04-01 12:55:18,267 - INFO - Epoch 54 Mean Train NLL: 12.7948
+2025-04-01 12:55:22,234 - INFO - Epoch: 55, Iter: 0/1, NLL: 12.7770, Reg term: 0.000, Total Grad Norm: 3.793311
+2025-04-01 12:55:22,235 - INFO - Epoch 55 Mean Train NLL: 12.7770
+2025-04-01 12:55:25,961 - INFO - Epoch: 56, Iter: 0/1, NLL: 12.7596, Reg term: 0.000, Total Grad Norm: 3.687376
+2025-04-01 12:55:25,961 - INFO - Epoch 56 Mean Train NLL: 12.7596
+2025-04-01 12:55:29,958 - INFO - Epoch: 57, Iter: 0/1, NLL: 12.7430, Reg term: 0.000, Total Grad Norm: 3.585870
+2025-04-01 12:55:29,958 - INFO - Epoch 57 Mean Train NLL: 12.7430
+2025-04-01 12:55:34,259 - INFO - Epoch: 58, Iter: 0/1, NLL: 12.7268, Reg term: 0.000, Total Grad Norm: 3.486557
+2025-04-01 12:55:34,259 - INFO - Epoch 58 Mean Train NLL: 12.7268
+2025-04-01 12:55:37,803 - INFO - Epoch: 59, Iter: 0/1, NLL: 12.7110, Reg term: 0.000, Total Grad Norm: 3.388739
+2025-04-01 12:55:37,803 - INFO - Epoch 59 Mean Train NLL: 12.7110
+2025-04-01 12:55:41,958 - INFO - Epoch: 60, Iter: 0/1, NLL: 12.6959, Reg term: 0.000, Total Grad Norm: 3.294046
+2025-04-01 12:55:41,958 - INFO - Epoch 60 Mean Train NLL: 12.6959
+2025-04-01 12:55:57,497 - INFO - Epoch: 61, Iter: 0/1, NLL: 12.6811, Reg term: 0.000, Total Grad Norm: 3.200805
+2025-04-01 12:55:57,497 - INFO - Epoch 61 Mean Train NLL: 12.6811
+2025-04-01 12:56:01,498 - INFO - Epoch: 62, Iter: 0/1, NLL: 12.6667, Reg term: 0.000, Total Grad Norm: 3.109841
+2025-04-01 12:56:01,498 - INFO - Epoch 62 Mean Train NLL: 12.6667
+2025-04-01 12:56:05,835 - INFO - Epoch: 63, Iter: 0/1, NLL: 12.6528, Reg term: 0.000, Total Grad Norm: 3.022451
+2025-04-01 12:56:05,835 - INFO - Epoch 63 Mean Train NLL: 12.6528
+2025-04-01 12:56:09,584 - INFO - Epoch: 64, Iter: 0/1, NLL: 12.6392, Reg term: 0.000, Total Grad Norm: 2.936551
+2025-04-01 12:56:09,585 - INFO - Epoch 64 Mean Train NLL: 12.6392
+2025-04-01 12:56:13,116 - INFO - Epoch: 65, Iter: 0/1, NLL: 12.6260, Reg term: 0.000, Total Grad Norm: 2.853269
+2025-04-01 12:56:13,116 - INFO - Epoch 65 Mean Train NLL: 12.6260
+2025-04-01 12:56:17,184 - INFO - Epoch: 66, Iter: 0/1, NLL: 12.6130, Reg term: 0.000, Total Grad Norm: 2.773606
+2025-04-01 12:56:17,185 - INFO - Epoch 66 Mean Train NLL: 12.6130
+2025-04-01 12:56:20,853 - INFO - Epoch: 67, Iter: 0/1, NLL: 12.6005, Reg term: 0.000, Total Grad Norm: 2.695634
+2025-04-01 12:56:20,853 - INFO - Epoch 67 Mean Train NLL: 12.6005
+2025-04-01 12:56:24,156 - INFO - Epoch: 68, Iter: 0/1, NLL: 12.5882, Reg term: 0.000, Total Grad Norm: 2.621547
+2025-04-01 12:56:24,156 - INFO - Epoch 68 Mean Train NLL: 12.5882
+2025-04-01 12:56:27,537 - INFO - Epoch: 69, Iter: 0/1, NLL: 12.5764, Reg term: 0.000, Total Grad Norm: 2.551201
+2025-04-01 12:56:27,538 - INFO - Epoch 69 Mean Train NLL: 12.5764
+2025-04-01 12:56:30,888 - INFO - Epoch: 70, Iter: 0/1, NLL: 12.5647, Reg term: 0.000, Total Grad Norm: 2.483215
+2025-04-01 12:56:30,888 - INFO - Epoch 70 Mean Train NLL: 12.5647
+2025-04-01 12:56:35,842 - INFO - Epoch: 71, Iter: 0/1, NLL: 12.5532, Reg term: 0.000, Total Grad Norm: 2.418073
+2025-04-01 12:56:35,843 - INFO - Epoch 71 Mean Train NLL: 12.5532
+2025-04-01 12:56:39,191 - INFO - Epoch: 72, Iter: 0/1, NLL: 12.5420, Reg term: 0.000, Total Grad Norm: 2.355545
+2025-04-01 12:56:39,192 - INFO - Epoch 72 Mean Train NLL: 12.5420
+2025-04-01 12:56:42,648 - INFO - Epoch: 73, Iter: 0/1, NLL: 12.5311, Reg term: 0.000, Total Grad Norm: 2.296819
+2025-04-01 12:56:42,648 - INFO - Epoch 73 Mean Train NLL: 12.5311
+2025-04-01 12:56:45,978 - INFO - Epoch: 74, Iter: 0/1, NLL: 12.5204, Reg term: 0.000, Total Grad Norm: 2.240751
+2025-04-01 12:56:45,979 - INFO - Epoch 74 Mean Train NLL: 12.5204
+2025-04-01 12:56:49,276 - INFO - Epoch: 75, Iter: 0/1, NLL: 12.5100, Reg term: 0.000, Total Grad Norm: 2.188046
+2025-04-01 12:56:49,276 - INFO - Epoch 75 Mean Train NLL: 12.5100
+2025-04-01 12:56:52,847 - INFO - Epoch: 76, Iter: 0/1, NLL: 12.4997, Reg term: 0.000, Total Grad Norm: 2.138140
+2025-04-01 12:56:52,848 - INFO - Epoch 76 Mean Train NLL: 12.4997
+2025-04-01 12:56:56,385 - INFO - Epoch: 77, Iter: 0/1, NLL: 12.4896, Reg term: 0.000, Total Grad Norm: 2.090882
+2025-04-01 12:56:56,385 - INFO - Epoch 77 Mean Train NLL: 12.4896
+2025-04-01 12:56:59,930 - INFO - Epoch: 78, Iter: 0/1, NLL: 12.4798, Reg term: 0.000, Total Grad Norm: 2.045990
+2025-04-01 12:56:59,930 - INFO - Epoch 78 Mean Train NLL: 12.4798
+2025-04-01 12:57:03,799 - INFO - Epoch: 79, Iter: 0/1, NLL: 12.4701, Reg term: 0.000, Total Grad Norm: 2.003190
+2025-04-01 12:57:03,799 - INFO - Epoch 79 Mean Train NLL: 12.4701
+2025-04-01 12:57:07,611 - INFO - Epoch: 80, Iter: 0/1, NLL: 12.4606, Reg term: 0.000, Total Grad Norm: 1.962613
+2025-04-01 12:57:07,611 - INFO - Epoch 80 Mean Train NLL: 12.4606
+2025-04-01 12:57:22,575 - INFO - Epoch: 81, Iter: 0/1, NLL: 12.4513, Reg term: 0.000, Total Grad Norm: 1.924713
+2025-04-01 12:57:22,575 - INFO - Epoch 81 Mean Train NLL: 12.4513
+2025-04-01 12:57:26,776 - INFO - Epoch: 82, Iter: 0/1, NLL: 12.4422, Reg term: 0.000, Total Grad Norm: 1.888785
+2025-04-01 12:57:26,776 - INFO - Epoch 82 Mean Train NLL: 12.4422
+2025-04-01 12:57:30,824 - INFO - Epoch: 83, Iter: 0/1, NLL: 12.4333, Reg term: 0.000, Total Grad Norm: 1.854663
+2025-04-01 12:57:30,825 - INFO - Epoch 83 Mean Train NLL: 12.4333
+2025-04-01 12:57:34,511 - INFO - Epoch: 84, Iter: 0/1, NLL: 12.4245, Reg term: 0.000, Total Grad Norm: 1.821476
+2025-04-01 12:57:34,511 - INFO - Epoch 84 Mean Train NLL: 12.4245
+2025-04-01 12:57:38,570 - INFO - Epoch: 85, Iter: 0/1, NLL: 12.4159, Reg term: 0.000, Total Grad Norm: 1.791196
+2025-04-01 12:57:38,570 - INFO - Epoch 85 Mean Train NLL: 12.4159
+2025-04-01 12:57:42,419 - INFO - Epoch: 86, Iter: 0/1, NLL: 12.4073, Reg term: 0.000, Total Grad Norm: 1.761256
+2025-04-01 12:57:42,419 - INFO - Epoch 86 Mean Train NLL: 12.4073
+2025-04-01 12:57:46,266 - INFO - Epoch: 87, Iter: 0/1, NLL: 12.3990, Reg term: 0.000, Total Grad Norm: 1.732604
+2025-04-01 12:57:46,267 - INFO - Epoch 87 Mean Train NLL: 12.3990
+2025-04-01 12:57:49,976 - INFO - Epoch: 88, Iter: 0/1, NLL: 12.3908, Reg term: 0.000, Total Grad Norm: 1.706001
+2025-04-01 12:57:49,976 - INFO - Epoch 88 Mean Train NLL: 12.3908
+2025-04-01 12:57:53,756 - INFO - Epoch: 89, Iter: 0/1, NLL: 12.3827, Reg term: 0.000, Total Grad Norm: 1.680231
+2025-04-01 12:57:53,756 - INFO - Epoch 89 Mean Train NLL: 12.3827
+2025-04-01 12:57:57,671 - INFO - Epoch: 90, Iter: 0/1, NLL: 12.3748, Reg term: 0.000, Total Grad Norm: 1.655498
+2025-04-01 12:57:57,671 - INFO - Epoch 90 Mean Train NLL: 12.3748
+2025-04-01 12:58:01,457 - INFO - Epoch: 91, Iter: 0/1, NLL: 12.3670, Reg term: 0.000, Total Grad Norm: 1.631334
+2025-04-01 12:58:01,457 - INFO - Epoch 91 Mean Train NLL: 12.3670
+2025-04-01 12:58:05,568 - INFO - Epoch: 92, Iter: 0/1, NLL: 12.3593, Reg term: 0.000, Total Grad Norm: 1.608713
+2025-04-01 12:58:05,568 - INFO - Epoch 92 Mean Train NLL: 12.3593
+2025-04-01 12:58:09,639 - INFO - Epoch: 93, Iter: 0/1, NLL: 12.3518, Reg term: 0.000, Total Grad Norm: 1.586891
+2025-04-01 12:58:09,640 - INFO - Epoch 93 Mean Train NLL: 12.3518
+2025-04-01 12:58:13,599 - INFO - Epoch: 94, Iter: 0/1, NLL: 12.3444, Reg term: 0.000, Total Grad Norm: 1.565643
+2025-04-01 12:58:13,599 - INFO - Epoch 94 Mean Train NLL: 12.3444
+2025-04-01 12:58:18,486 - INFO - Epoch: 95, Iter: 0/1, NLL: 12.3371, Reg term: 0.000, Total Grad Norm: 1.545346
+2025-04-01 12:58:18,486 - INFO - Epoch 95 Mean Train NLL: 12.3371
+2025-04-01 12:58:24,250 - INFO - Epoch: 96, Iter: 0/1, NLL: 12.3299, Reg term: 0.000, Total Grad Norm: 1.525088
+2025-04-01 12:58:24,250 - INFO - Epoch 96 Mean Train NLL: 12.3299
+2025-04-01 12:58:28,890 - INFO - Epoch: 97, Iter: 0/1, NLL: 12.3228, Reg term: 0.000, Total Grad Norm: 1.506108
+2025-04-01 12:58:28,890 - INFO - Epoch 97 Mean Train NLL: 12.3228
+2025-04-01 12:58:33,386 - INFO - Epoch: 98, Iter: 0/1, NLL: 12.3160, Reg term: 0.000, Total Grad Norm: 1.487938
+2025-04-01 12:58:33,386 - INFO - Epoch 98 Mean Train NLL: 12.3160
+2025-04-01 12:58:37,622 - INFO - Epoch: 99, Iter: 0/1, NLL: 12.3092, Reg term: 0.000, Total Grad Norm: 1.469237
+2025-04-01 12:58:37,622 - INFO - Epoch 99 Mean Train NLL: 12.3092
+2025-04-01 12:58:42,044 - INFO - Epoch: 100, Iter: 0/1, NLL: 12.3024, Reg term: 0.000, Total Grad Norm: 1.451293
+2025-04-01 12:58:42,044 - INFO - Epoch 100 Mean Train NLL: 12.3024
+2025-04-01 12:58:58,175 - INFO - Epoch: 101, Iter: 0/1, NLL: 12.2958, Reg term: 0.000, Total Grad Norm: 1.434359
+2025-04-01 12:58:58,175 - INFO - Epoch 101 Mean Train NLL: 12.2958
+2025-04-01 12:59:02,614 - INFO - Epoch: 102, Iter: 0/1, NLL: 12.2894, Reg term: 0.000, Total Grad Norm: 1.416983
+2025-04-01 12:59:02,614 - INFO - Epoch 102 Mean Train NLL: 12.2894
+2025-04-01 12:59:07,807 - INFO - Epoch: 103, Iter: 0/1, NLL: 12.2829, Reg term: 0.000, Total Grad Norm: 1.400890
+2025-04-01 12:59:07,807 - INFO - Epoch 103 Mean Train NLL: 12.2829
+2025-04-01 12:59:13,393 - INFO - Epoch: 104, Iter: 0/1, NLL: 12.2767, Reg term: 0.000, Total Grad Norm: 1.384285
+2025-04-01 12:59:13,394 - INFO - Epoch 104 Mean Train NLL: 12.2767
+2025-04-01 12:59:18,925 - INFO - Epoch: 105, Iter: 0/1, NLL: 12.2705, Reg term: 0.000, Total Grad Norm: 1.368548
+2025-04-01 12:59:18,925 - INFO - Epoch 105 Mean Train NLL: 12.2705
+2025-04-01 12:59:24,546 - INFO - Epoch: 106, Iter: 0/1, NLL: 12.2644, Reg term: 0.000, Total Grad Norm: 1.353594
+2025-04-01 12:59:24,547 - INFO - Epoch 106 Mean Train NLL: 12.2644
+2025-04-01 12:59:29,108 - INFO - Epoch: 107, Iter: 0/1, NLL: 12.2584, Reg term: 0.000, Total Grad Norm: 1.337652
+2025-04-01 12:59:29,108 - INFO - Epoch 107 Mean Train NLL: 12.2584
+2025-04-01 12:59:33,663 - INFO - Epoch: 108, Iter: 0/1, NLL: 12.2525, Reg term: 0.000, Total Grad Norm: 1.323153
+2025-04-01 12:59:33,663 - INFO - Epoch 108 Mean Train NLL: 12.2525
+2025-04-01 12:59:38,087 - INFO - Epoch: 109, Iter: 0/1, NLL: 12.2468, Reg term: 0.000, Total Grad Norm: 1.308703
+2025-04-01 12:59:38,087 - INFO - Epoch 109 Mean Train NLL: 12.2468
+2025-04-01 12:59:42,161 - INFO - Epoch: 110, Iter: 0/1, NLL: 12.2411, Reg term: 0.000, Total Grad Norm: 1.294310
+2025-04-01 12:59:42,162 - INFO - Epoch 110 Mean Train NLL: 12.2411
+2025-04-01 12:59:46,047 - INFO - Epoch: 111, Iter: 0/1, NLL: 12.2355, Reg term: 0.000, Total Grad Norm: 1.280662
+2025-04-01 12:59:46,047 - INFO - Epoch 111 Mean Train NLL: 12.2355
+2025-04-01 12:59:49,799 - INFO - Epoch: 112, Iter: 0/1, NLL: 12.2300, Reg term: 0.000, Total Grad Norm: 1.265948
+2025-04-01 12:59:49,799 - INFO - Epoch 112 Mean Train NLL: 12.2300
+2025-04-01 12:59:53,724 - INFO - Epoch: 113, Iter: 0/1, NLL: 12.2246, Reg term: 0.000, Total Grad Norm: 1.251475
+2025-04-01 12:59:53,724 - INFO - Epoch 113 Mean Train NLL: 12.2246
+2025-04-01 12:59:57,361 - INFO - Epoch: 114, Iter: 0/1, NLL: 12.2193, Reg term: 0.000, Total Grad Norm: 1.238293
+2025-04-01 12:59:57,361 - INFO - Epoch 114 Mean Train NLL: 12.2193
+2025-04-01 13:00:01,514 - INFO - Epoch: 115, Iter: 0/1, NLL: 12.2140, Reg term: 0.000, Total Grad Norm: 1.224772
+2025-04-01 13:00:01,515 - INFO - Epoch 115 Mean Train NLL: 12.2140
+2025-04-01 13:00:06,204 - INFO - Epoch: 116, Iter: 0/1, NLL: 12.2088, Reg term: 0.000, Total Grad Norm: 1.210647
+2025-04-01 13:00:06,204 - INFO - Epoch 116 Mean Train NLL: 12.2088
+2025-04-01 13:00:10,674 - INFO - Epoch: 117, Iter: 0/1, NLL: 12.2038, Reg term: 0.000, Total Grad Norm: 1.198199
+2025-04-01 13:00:10,674 - INFO - Epoch 117 Mean Train NLL: 12.2038
+2025-04-01 13:00:17,773 - INFO - Epoch: 118, Iter: 0/1, NLL: 12.1988, Reg term: 0.000, Total Grad Norm: 1.184716
+2025-04-01 13:00:17,774 - INFO - Epoch 118 Mean Train NLL: 12.1988
+2025-04-01 13:00:22,335 - INFO - Epoch: 119, Iter: 0/1, NLL: 12.1939, Reg term: 0.000, Total Grad Norm: 1.171459
+2025-04-01 13:00:22,335 - INFO - Epoch 119 Mean Train NLL: 12.1939
+2025-04-01 13:00:26,479 - INFO - Epoch: 120, Iter: 0/1, NLL: 12.1890, Reg term: 0.000, Total Grad Norm: 1.159464
+2025-04-01 13:00:26,480 - INFO - Epoch 120 Mean Train NLL: 12.1890
+2025-04-01 13:01:03,584 - INFO - Epoch: 121, Iter: 0/1, NLL: 12.1843, Reg term: 0.000, Total Grad Norm: 1.145866
+2025-04-01 13:01:03,584 - INFO - Epoch 121 Mean Train NLL: 12.1843
+2025-04-01 13:01:08,898 - INFO - Epoch: 122, Iter: 0/1, NLL: 12.1796, Reg term: 0.000, Total Grad Norm: 1.133432
+2025-04-01 13:01:08,899 - INFO - Epoch 122 Mean Train NLL: 12.1796
+2025-04-01 13:01:14,060 - INFO - Epoch: 123, Iter: 0/1, NLL: 12.1750, Reg term: 0.000, Total Grad Norm: 1.120253
+2025-04-01 13:01:14,060 - INFO - Epoch 123 Mean Train NLL: 12.1750
+2025-04-01 13:01:18,790 - INFO - Epoch: 124, Iter: 0/1, NLL: 12.1705, Reg term: 0.000, Total Grad Norm: 1.108127
+2025-04-01 13:01:18,790 - INFO - Epoch 124 Mean Train NLL: 12.1705
+2025-04-01 13:01:23,160 - INFO - Epoch: 125, Iter: 0/1, NLL: 12.1660, Reg term: 0.000, Total Grad Norm: 1.095461
+2025-04-01 13:01:23,161 - INFO - Epoch 125 Mean Train NLL: 12.1660
+2025-04-01 13:01:27,392 - INFO - Epoch: 126, Iter: 0/1, NLL: 12.1616, Reg term: 0.000, Total Grad Norm: 1.083412
+2025-04-01 13:01:27,392 - INFO - Epoch 126 Mean Train NLL: 12.1616
+2025-04-01 13:01:31,394 - INFO - Epoch: 127, Iter: 0/1, NLL: 12.1573, Reg term: 0.000, Total Grad Norm: 1.071299
+2025-04-01 13:01:31,394 - INFO - Epoch 127 Mean Train NLL: 12.1573
+2025-04-01 13:01:36,956 - INFO - Epoch: 128, Iter: 0/1, NLL: 12.1530, Reg term: 0.000, Total Grad Norm: 1.058603
+2025-04-01 13:01:36,956 - INFO - Epoch 128 Mean Train NLL: 12.1530
+2025-04-01 13:01:41,608 - INFO - Epoch: 129, Iter: 0/1, NLL: 12.1488, Reg term: 0.000, Total Grad Norm: 1.046804
+2025-04-01 13:01:41,609 - INFO - Epoch 129 Mean Train NLL: 12.1488
+2025-04-01 13:01:46,056 - INFO - Epoch: 130, Iter: 0/1, NLL: 12.1447, Reg term: 0.000, Total Grad Norm: 1.034447
+2025-04-01 13:01:46,056 - INFO - Epoch 130 Mean Train NLL: 12.1447
+2025-04-01 13:01:51,212 - INFO - Epoch: 131, Iter: 0/1, NLL: 12.1406, Reg term: 0.000, Total Grad Norm: 1.022293
+2025-04-01 13:01:51,213 - INFO - Epoch 131 Mean Train NLL: 12.1406
+2025-04-01 13:01:55,459 - INFO - Epoch: 132, Iter: 0/1, NLL: 12.1366, Reg term: 0.000, Total Grad Norm: 1.011161
+2025-04-01 13:01:55,459 - INFO - Epoch 132 Mean Train NLL: 12.1366
+2025-04-01 13:01:59,626 - INFO - Epoch: 133, Iter: 0/1, NLL: 12.1327, Reg term: 0.000, Total Grad Norm: 0.999634
+2025-04-01 13:01:59,626 - INFO - Epoch 133 Mean Train NLL: 12.1327
+2025-04-01 13:02:04,077 - INFO - Epoch: 134, Iter: 0/1, NLL: 12.1289, Reg term: 0.000, Total Grad Norm: 0.988000
+2025-04-01 13:02:04,077 - INFO - Epoch 134 Mean Train NLL: 12.1289
+2025-04-01 13:02:08,882 - INFO - Epoch: 135, Iter: 0/1, NLL: 12.1250, Reg term: 0.000, Total Grad Norm: 0.976797
+2025-04-01 13:02:08,882 - INFO - Epoch 135 Mean Train NLL: 12.1250
+2025-04-01 13:02:13,668 - INFO - Epoch: 136, Iter: 0/1, NLL: 12.1213, Reg term: 0.000, Total Grad Norm: 0.965232
+2025-04-01 13:02:13,669 - INFO - Epoch 136 Mean Train NLL: 12.1213
+2025-04-01 13:02:19,316 - INFO - Epoch: 137, Iter: 0/1, NLL: 12.1175, Reg term: 0.000, Total Grad Norm: 0.953820
+2025-04-01 13:02:19,317 - INFO - Epoch 137 Mean Train NLL: 12.1175
+2025-04-01 13:02:24,703 - INFO - Epoch: 138, Iter: 0/1, NLL: 12.1139, Reg term: 0.000, Total Grad Norm: 0.943010
+2025-04-01 13:02:24,704 - INFO - Epoch 138 Mean Train NLL: 12.1139
+2025-04-01 13:02:33,423 - INFO - Epoch: 139, Iter: 0/1, NLL: 12.1103, Reg term: 0.000, Total Grad Norm: 0.931696
+2025-04-01 13:02:33,423 - INFO - Epoch 139 Mean Train NLL: 12.1103
+2025-04-01 13:02:40,770 - INFO - Epoch: 140, Iter: 0/1, NLL: 12.1068, Reg term: 0.000, Total Grad Norm: 0.920583
+2025-04-01 13:02:40,771 - INFO - Epoch 140 Mean Train NLL: 12.1068
+2025-04-01 13:03:14,088 - INFO - Epoch: 141, Iter: 0/1, NLL: 12.1033, Reg term: 0.000, Total Grad Norm: 0.909881
+2025-04-01 13:03:14,088 - INFO - Epoch 141 Mean Train NLL: 12.1033
+2025-04-01 13:03:19,018 - INFO - Epoch: 142, Iter: 0/1, NLL: 12.0999, Reg term: 0.000, Total Grad Norm: 0.898989
+2025-04-01 13:03:19,018 - INFO - Epoch 142 Mean Train NLL: 12.0999
+2025-04-01 13:03:23,703 - INFO - Epoch: 143, Iter: 0/1, NLL: 12.0965, Reg term: 0.000, Total Grad Norm: 0.887999
+2025-04-01 13:03:23,703 - INFO - Epoch 143 Mean Train NLL: 12.0965
+2025-04-01 13:03:28,325 - INFO - Epoch: 144, Iter: 0/1, NLL: 12.0932, Reg term: 0.000, Total Grad Norm: 0.877840
+2025-04-01 13:03:28,325 - INFO - Epoch 144 Mean Train NLL: 12.0932
+2025-04-01 13:03:32,755 - INFO - Epoch: 145, Iter: 0/1, NLL: 12.0899, Reg term: 0.000, Total Grad Norm: 0.867447
+2025-04-01 13:03:32,755 - INFO - Epoch 145 Mean Train NLL: 12.0899
+2025-04-01 13:03:39,581 - INFO - Epoch: 146, Iter: 0/1, NLL: 12.0866, Reg term: 0.000, Total Grad Norm: 0.856955
+2025-04-01 13:03:39,582 - INFO - Epoch 146 Mean Train NLL: 12.0866
+2025-04-01 13:03:45,829 - INFO - Epoch: 147, Iter: 0/1, NLL: 12.0835, Reg term: 0.000, Total Grad Norm: 0.847514
+2025-04-01 13:03:45,830 - INFO - Epoch 147 Mean Train NLL: 12.0835
+2025-04-01 13:03:53,254 - INFO - Epoch: 148, Iter: 0/1, NLL: 12.0804, Reg term: 0.000, Total Grad Norm: 0.837283
+2025-04-01 13:03:53,255 - INFO - Epoch 148 Mean Train NLL: 12.0804
+2025-04-01 13:04:00,675 - INFO - Epoch: 149, Iter: 0/1, NLL: 12.0773, Reg term: 0.000, Total Grad Norm: 0.827658
+2025-04-01 13:04:00,676 - INFO - Epoch 149 Mean Train NLL: 12.0773
+2025-04-01 13:04:07,182 - INFO - Epoch: 150, Iter: 0/1, NLL: 12.0742, Reg term: 0.000, Total Grad Norm: 0.818009
+2025-04-01 13:04:07,183 - INFO - Epoch 150 Mean Train NLL: 12.0742
+2025-04-01 13:04:15,455 - INFO - Epoch: 151, Iter: 0/1, NLL: 12.0712, Reg term: 0.000, Total Grad Norm: 0.808285
+2025-04-01 13:04:15,455 - INFO - Epoch 151 Mean Train NLL: 12.0712
+2025-04-01 13:04:22,098 - INFO - Epoch: 152, Iter: 0/1, NLL: 12.0683, Reg term: 0.000, Total Grad Norm: 0.799171
+2025-04-01 13:04:22,098 - INFO - Epoch 152 Mean Train NLL: 12.0683
+2025-04-01 13:04:27,932 - INFO - Epoch: 153, Iter: 0/1, NLL: 12.0654, Reg term: 0.000, Total Grad Norm: 0.789734
+2025-04-01 13:04:27,932 - INFO - Epoch 153 Mean Train NLL: 12.0654
+2025-04-01 13:04:32,787 - INFO - Epoch: 154, Iter: 0/1, NLL: 12.0625, Reg term: 0.000, Total Grad Norm: 0.780827
+2025-04-01 13:04:32,788 - INFO - Epoch 154 Mean Train NLL: 12.0625
+2025-04-01 13:04:38,383 - INFO - Epoch: 155, Iter: 0/1, NLL: 12.0597, Reg term: 0.000, Total Grad Norm: 0.771555
+2025-04-01 13:04:38,383 - INFO - Epoch 155 Mean Train NLL: 12.0597
+2025-04-01 13:04:43,579 - INFO - Epoch: 156, Iter: 0/1, NLL: 12.0569, Reg term: 0.000, Total Grad Norm: 0.762472
+2025-04-01 13:04:43,579 - INFO - Epoch 156 Mean Train NLL: 12.0569
+2025-04-01 13:04:49,001 - INFO - Epoch: 157, Iter: 0/1, NLL: 12.0541, Reg term: 0.000, Total Grad Norm: 0.753987
+2025-04-01 13:04:49,001 - INFO - Epoch 157 Mean Train NLL: 12.0541
+2025-04-01 13:04:53,737 - INFO - Epoch: 158, Iter: 0/1, NLL: 12.0514, Reg term: 0.000, Total Grad Norm: 0.745076
+2025-04-01 13:04:53,737 - INFO - Epoch 158 Mean Train NLL: 12.0514
+2025-04-01 13:04:58,945 - INFO - Epoch: 159, Iter: 0/1, NLL: 12.0488, Reg term: 0.000, Total Grad Norm: 0.736789
+2025-04-01 13:04:58,945 - INFO - Epoch 159 Mean Train NLL: 12.0488
+2025-04-01 13:05:04,140 - INFO - Epoch: 160, Iter: 0/1, NLL: 12.0461, Reg term: 0.000, Total Grad Norm: 0.728698
+2025-04-01 13:05:04,141 - INFO - Epoch 160 Mean Train NLL: 12.0461
+2025-04-01 13:05:33,168 - INFO - Epoch: 161, Iter: 0/1, NLL: 12.0436, Reg term: 0.000, Total Grad Norm: 0.720297
+2025-04-01 13:05:33,169 - INFO - Epoch 161 Mean Train NLL: 12.0436
+2025-04-01 13:05:38,135 - INFO - Epoch: 162, Iter: 0/1, NLL: 12.0410, Reg term: 0.000, Total Grad Norm: 0.711786
+2025-04-01 13:05:38,135 - INFO - Epoch 162 Mean Train NLL: 12.0410
+2025-04-01 13:05:43,001 - INFO - Epoch: 163, Iter: 0/1, NLL: 12.0385, Reg term: 0.000, Total Grad Norm: 0.703345
+2025-04-01 13:05:43,001 - INFO - Epoch 163 Mean Train NLL: 12.0385
+2025-04-01 13:05:48,695 - INFO - Epoch: 164, Iter: 0/1, NLL: 12.0360, Reg term: 0.000, Total Grad Norm: 0.696129
+2025-04-01 13:05:48,696 - INFO - Epoch 164 Mean Train NLL: 12.0360
+2025-04-01 13:05:53,822 - INFO - Epoch: 165, Iter: 0/1, NLL: 12.0336, Reg term: 0.000, Total Grad Norm: 0.687960
+2025-04-01 13:05:53,823 - INFO - Epoch 165 Mean Train NLL: 12.0336
+2025-04-01 13:05:59,201 - INFO - Epoch: 166, Iter: 0/1, NLL: 12.0311, Reg term: 0.000, Total Grad Norm: 0.680330
+2025-04-01 13:05:59,201 - INFO - Epoch 166 Mean Train NLL: 12.0311
+2025-04-01 13:06:05,020 - INFO - Epoch: 167, Iter: 0/1, NLL: 12.0287, Reg term: 0.000, Total Grad Norm: 0.672542
+2025-04-01 13:06:05,021 - INFO - Epoch 167 Mean Train NLL: 12.0287
+2025-04-01 13:06:14,748 - INFO - Epoch: 168, Iter: 0/1, NLL: 12.0264, Reg term: 0.000, Total Grad Norm: 0.665014
+2025-04-01 13:06:14,749 - INFO - Epoch 168 Mean Train NLL: 12.0264
+2025-04-01 13:06:21,142 - INFO - Epoch: 169, Iter: 0/1, NLL: 12.0241, Reg term: 0.000, Total Grad Norm: 0.657892
+2025-04-01 13:06:21,143 - INFO - Epoch 169 Mean Train NLL: 12.0241
+2025-04-01 13:06:26,791 - INFO - Epoch: 170, Iter: 0/1, NLL: 12.0218, Reg term: 0.000, Total Grad Norm: 0.650053
+2025-04-01 13:06:26,792 - INFO - Epoch 170 Mean Train NLL: 12.0218
+2025-04-01 13:06:32,433 - INFO - Epoch: 171, Iter: 0/1, NLL: 12.0195, Reg term: 0.000, Total Grad Norm: 0.643252
+2025-04-01 13:06:32,434 - INFO - Epoch 171 Mean Train NLL: 12.0195
+2025-04-01 13:06:38,025 - INFO - Epoch: 172, Iter: 0/1, NLL: 12.0173, Reg term: 0.000, Total Grad Norm: 0.636025
+2025-04-01 13:06:38,025 - INFO - Epoch 172 Mean Train NLL: 12.0173
+2025-04-01 13:06:43,530 - INFO - Epoch: 173, Iter: 0/1, NLL: 12.0151, Reg term: 0.000, Total Grad Norm: 0.628615
+2025-04-01 13:06:43,530 - INFO - Epoch 173 Mean Train NLL: 12.0151
+2025-04-01 13:06:49,846 - INFO - Epoch: 174, Iter: 0/1, NLL: 12.0129, Reg term: 0.000, Total Grad Norm: 0.621840
+2025-04-01 13:06:49,846 - INFO - Epoch 174 Mean Train NLL: 12.0129
+2025-04-01 13:06:56,097 - INFO - Epoch: 175, Iter: 0/1, NLL: 12.0108, Reg term: 0.000, Total Grad Norm: 0.615112
+2025-04-01 13:06:56,097 - INFO - Epoch 175 Mean Train NLL: 12.0108
+2025-04-01 13:07:02,142 - INFO - Epoch: 176, Iter: 0/1, NLL: 12.0087, Reg term: 0.000, Total Grad Norm: 0.607856
+2025-04-01 13:07:02,142 - INFO - Epoch 176 Mean Train NLL: 12.0087
+2025-04-01 13:07:08,955 - INFO - Epoch: 177, Iter: 0/1, NLL: 12.0066, Reg term: 0.000, Total Grad Norm: 0.601785
+2025-04-01 13:07:08,955 - INFO - Epoch 177 Mean Train NLL: 12.0066
+2025-04-01 13:07:15,906 - INFO - Epoch: 178, Iter: 0/1, NLL: 12.0045, Reg term: 0.000, Total Grad Norm: 0.594110
+2025-04-01 13:07:15,906 - INFO - Epoch 178 Mean Train NLL: 12.0045
+2025-04-01 13:07:23,052 - INFO - Epoch: 179, Iter: 0/1, NLL: 12.0025, Reg term: 0.000, Total Grad Norm: 0.588266
+2025-04-01 13:07:23,053 - INFO - Epoch 179 Mean Train NLL: 12.0025
+2025-04-01 13:07:30,726 - INFO - Epoch: 180, Iter: 0/1, NLL: 12.0005, Reg term: 0.000, Total Grad Norm: 0.581727
+2025-04-01 13:07:30,727 - INFO - Epoch 180 Mean Train NLL: 12.0005
+2025-04-01 13:08:02,307 - INFO - Epoch: 181, Iter: 0/1, NLL: 11.9985, Reg term: 0.000, Total Grad Norm: 0.574847
+2025-04-01 13:08:02,308 - INFO - Epoch 181 Mean Train NLL: 11.9985
+2025-04-01 13:08:08,590 - INFO - Epoch: 182, Iter: 0/1, NLL: 11.9966, Reg term: 0.000, Total Grad Norm: 0.568872
+2025-04-01 13:08:08,591 - INFO - Epoch 182 Mean Train NLL: 11.9966
+2025-04-01 13:08:15,526 - INFO - Epoch: 183, Iter: 0/1, NLL: 11.9946, Reg term: 0.000, Total Grad Norm: 0.562281
+2025-04-01 13:08:15,527 - INFO - Epoch 183 Mean Train NLL: 11.9946
+2025-04-01 13:08:22,490 - INFO - Epoch: 184, Iter: 0/1, NLL: 11.9927, Reg term: 0.000, Total Grad Norm: 0.556573
+2025-04-01 13:08:22,490 - INFO - Epoch 184 Mean Train NLL: 11.9927
+2025-04-01 13:08:28,677 - INFO - Epoch: 185, Iter: 0/1, NLL: 11.9908, Reg term: 0.000, Total Grad Norm: 0.549736
+2025-04-01 13:08:28,677 - INFO - Epoch 185 Mean Train NLL: 11.9908
+2025-04-01 13:08:36,001 - INFO - Epoch: 186, Iter: 0/1, NLL: 11.9890, Reg term: 0.000, Total Grad Norm: 0.543890
+2025-04-01 13:08:36,001 - INFO - Epoch 186 Mean Train NLL: 11.9890
+2025-04-01 13:08:43,910 - INFO - Epoch: 187, Iter: 0/1, NLL: 11.9871, Reg term: 0.000, Total Grad Norm: 0.537772
+2025-04-01 13:08:43,910 - INFO - Epoch 187 Mean Train NLL: 11.9871
+2025-04-01 13:08:55,091 - INFO - Epoch: 188, Iter: 0/1, NLL: 11.9853, Reg term: 0.000, Total Grad Norm: 0.531529
+2025-04-01 13:08:55,091 - INFO - Epoch 188 Mean Train NLL: 11.9853
+2025-04-01 13:09:03,057 - INFO - Epoch: 189, Iter: 0/1, NLL: 11.9835, Reg term: 0.000, Total Grad Norm: 0.525909
+2025-04-01 13:09:03,058 - INFO - Epoch 189 Mean Train NLL: 11.9835
+2025-04-01 13:09:10,075 - INFO - Epoch: 190, Iter: 0/1, NLL: 11.9817, Reg term: 0.000, Total Grad Norm: 0.519862
+2025-04-01 13:09:10,075 - INFO - Epoch 190 Mean Train NLL: 11.9817
+2025-04-01 13:09:17,022 - INFO - Epoch: 191, Iter: 0/1, NLL: 11.9799, Reg term: 0.000, Total Grad Norm: 0.514462
+2025-04-01 13:09:17,022 - INFO - Epoch 191 Mean Train NLL: 11.9799
+2025-04-01 13:09:23,926 - INFO - Epoch: 192, Iter: 0/1, NLL: 11.9782, Reg term: 0.000, Total Grad Norm: 0.509119
+2025-04-01 13:09:23,926 - INFO - Epoch 192 Mean Train NLL: 11.9782
+2025-04-01 13:09:30,355 - INFO - Epoch: 193, Iter: 0/1, NLL: 11.9765, Reg term: 0.000, Total Grad Norm: 0.503327
+2025-04-01 13:09:30,356 - INFO - Epoch 193 Mean Train NLL: 11.9765
+2025-04-01 13:09:36,140 - INFO - Epoch: 194, Iter: 0/1, NLL: 11.9747, Reg term: 0.000, Total Grad Norm: 0.497286
+2025-04-01 13:09:36,140 - INFO - Epoch 194 Mean Train NLL: 11.9747
+2025-04-01 13:09:41,681 - INFO - Epoch: 195, Iter: 0/1, NLL: 11.9731, Reg term: 0.000, Total Grad Norm: 0.492106
+2025-04-01 13:09:41,681 - INFO - Epoch 195 Mean Train NLL: 11.9731
+2025-04-01 13:09:47,098 - INFO - Epoch: 196, Iter: 0/1, NLL: 11.9714, Reg term: 0.000, Total Grad Norm: 0.486019
+2025-04-01 13:09:47,098 - INFO - Epoch 196 Mean Train NLL: 11.9714
+2025-04-01 13:09:52,686 - INFO - Epoch: 197, Iter: 0/1, NLL: 11.9697, Reg term: 0.000, Total Grad Norm: 0.480578
+2025-04-01 13:09:52,686 - INFO - Epoch 197 Mean Train NLL: 11.9697
+2025-04-01 13:09:57,993 - INFO - Epoch: 198, Iter: 0/1, NLL: 11.9681, Reg term: 0.000, Total Grad Norm: 0.475646
+2025-04-01 13:09:57,994 - INFO - Epoch 198 Mean Train NLL: 11.9681
+2025-04-01 13:10:03,811 - INFO - Epoch: 199, Iter: 0/1, NLL: 11.9665, Reg term: 0.000, Total Grad Norm: 0.470159
+2025-04-01 13:10:03,811 - INFO - Epoch 199 Mean Train NLL: 11.9665
+2025-04-01 13:10:10,141 - INFO - Epoch: 200, Iter: 0/1, NLL: 11.9649, Reg term: 0.000, Total Grad Norm: 0.465034
+2025-04-01 13:10:10,142 - INFO - Epoch 200 Mean Train NLL: 11.9649
+2025-04-01 13:10:36,244 - INFO - Epoch: 201, Iter: 0/1, NLL: 11.9633, Reg term: 0.000, Total Grad Norm: 0.460018
+2025-04-01 13:10:36,245 - INFO - Epoch 201 Mean Train NLL: 11.9633
+2025-04-01 13:10:41,892 - INFO - Epoch: 202, Iter: 0/1, NLL: 11.9617, Reg term: 0.000, Total Grad Norm: 0.454455
+2025-04-01 13:10:41,892 - INFO - Epoch 202 Mean Train NLL: 11.9617
+2025-04-01 13:10:47,888 - INFO - Epoch: 203, Iter: 0/1, NLL: 11.9602, Reg term: 0.000, Total Grad Norm: 0.450377
+2025-04-01 13:10:47,888 - INFO - Epoch 203 Mean Train NLL: 11.9602
+2025-04-01 13:10:53,613 - INFO - Epoch: 204, Iter: 0/1, NLL: 11.9586, Reg term: 0.000, Total Grad Norm: 0.445159
+2025-04-01 13:10:53,614 - INFO - Epoch 204 Mean Train NLL: 11.9586
+2025-04-01 13:10:59,072 - INFO - Epoch: 205, Iter: 0/1, NLL: 11.9571, Reg term: 0.000, Total Grad Norm: 0.440303
+2025-04-01 13:10:59,072 - INFO - Epoch 205 Mean Train NLL: 11.9571
+2025-04-01 13:11:04,378 - INFO - Epoch: 206, Iter: 0/1, NLL: 11.9555, Reg term: 0.000, Total Grad Norm: 0.435195
+2025-04-01 13:11:04,379 - INFO - Epoch 206 Mean Train NLL: 11.9555
+2025-04-01 13:11:09,845 - INFO - Epoch: 207, Iter: 0/1, NLL: 11.9541, Reg term: 0.000, Total Grad Norm: 0.430692
+2025-04-01 13:11:09,845 - INFO - Epoch 207 Mean Train NLL: 11.9541
+2025-04-01 13:11:14,866 - INFO - Epoch: 208, Iter: 0/1, NLL: 11.9526, Reg term: 0.000, Total Grad Norm: 0.426105
+2025-04-01 13:11:14,866 - INFO - Epoch 208 Mean Train NLL: 11.9526
+2025-04-01 13:11:20,529 - INFO - Epoch: 209, Iter: 0/1, NLL: 11.9511, Reg term: 0.000, Total Grad Norm: 0.421652
+2025-04-01 13:11:20,530 - INFO - Epoch 209 Mean Train NLL: 11.9511

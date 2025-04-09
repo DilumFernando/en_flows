@@ -12,62 +12,6 @@ from flows.distributions import PositionPrior
 from flows.utils import remove_mean
 
 
-parser = argparse.ArgumentParser(description='SE3')
-parser.add_argument('--model', type=str, default='simple_dynamics',
-                    help='our_dynamics | schnet | simple_dynamics | kernel_dynamics | kernel_dynamics_inner | egnn_dynamics | gnn_dynamics')
-parser.add_argument('--data', type=str, default='lj13',
-                    help='dw4 | lj13')
-parser.add_argument('--n_epochs', type=int, default=10)
-parser.add_argument('--batch_size', type=int, default=100)
-parser.add_argument('--lr', type=float, default=5e-4)
-parser.add_argument('--n_data', type=int, default=100,
-                    help="Number of training samples")
-parser.add_argument('--sweep_n_data', type=eval, default=False,
-                    help="sweep n_data instead of using the provided parameter")
-parser.add_argument('--condition_time', type=eval, default=True,
-                    help='True | False')
-parser.add_argument('--trace', type=str, default='hutch',
-                    help='hutch | exact')
-parser.add_argument('--tanh', type=eval, default=True,
-                    help='use tanh in the coord_mlp')
-parser.add_argument('--hutch_noise', type=str, default='bernoulli',
-                    help='gaussian | bernoulli')
-parser.add_argument('--nf', type=int, default=32,
-                    help='number of layers')
-parser.add_argument('--n_layers', type=int, default=3,
-                    help='number of layers')
-parser.add_argument('--name', type=str, default='debug')
-parser.add_argument('--wandb_usr', type=str, default='')
-parser.add_argument('--n_report_steps', type=int, default=1)
-parser.add_argument('--test_epochs', type=int, default=10)
-parser.add_argument('--attention', type=eval, default=True,
-                    help='use attention in the EGNN')
-parser.add_argument('--data_augmentation', type=eval, default=False,
-                    help='use data augmentation')
-parser.add_argument('--weight_decay', type=float, default=1e-12,
-                    help='use data augmentation')
-parser.add_argument('--ode_regularization', type=float, default=0)
-parser.add_argument('--x_aggregation', type=str, default='sum',
-                    help='sum | mean')
-
-args, unparsed_args = parser.parse_known_args()
-if args.model == 'kernel_dynamics' and args.data == 'lj13':
-    args.model = 'kernel_dynamics_lj13'
-print(args)
-
-if args.data == 'dw4':
-    print(args.n_data)
-    n_particles = 4
-    n_dims = 2
-    dim = n_particles * n_dims  # system dimensionality
-elif args.data == 'lj13':
-    n_particles = 13
-    n_dims = 3
-    dim = n_particles * n_dims
-else:
-    raise Exception('wrong data partition: %s' % args.data)
-
-
 def main():
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -139,11 +83,31 @@ def main():
 
             loss.backward()
 
-            optim.step()
+            # Compute and store gradient statistics
+            grad_stats = []
+            total_grad_norm = 0.0
 
+            for name, param in flow.named_parameters():
+                if param.grad is not None:
+                    grad_mean = param.grad.mean().item()
+                    grad_std = param.grad.std().item()
+                    param_norm = param.grad.norm().item()
+                    total_grad_norm += param_norm ** 2
+                    grad_stats.append(f"{name}: mean={grad_mean:.6f}, std={grad_std:.6f}, norm={param_norm:.6f}")
+
+            # Compute total gradient norm
+            total_grad_norm = total_grad_norm ** 0.5
+
+            optim.step()  # Update model parameters
+
+            # Log loss and gradients at reporting steps
             if it % args.n_report_steps == 0:
-                logging.info(f"Epoch: {epoch}, Iter: {it}/{len(batch_iter_train)}, NLL: {nll.item():.4f}, Reg term: {reg_term.item():.3f}")
+                logging.info(f"Epoch: {epoch}, Iter: {it}/{len(batch_iter_train)}, "
+                            f"NLL: {nll.item():.4f}, Reg term: {reg_term.item():.3f}, Total Grad Norm: {total_grad_norm:.6f}")
+                for grad_stat in grad_stats:
+                    logging.info(f"  {grad_stat}")  # Log each parameter's gradient info
 
+            
             nll_epoch.append(nll.item())
 
         # Log Epoch NLL
@@ -206,6 +170,61 @@ def test(args, data_test, batch_iter_test, flow, prior, epoch, partition='test')
     return data_nll
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='SE3')
+    parser.add_argument('--model', type=str, default='simple_dynamics',
+                        help='our_dynamics | schnet | simple_dynamics | kernel_dynamics | kernel_dynamics_inner | egnn_dynamics | gnn_dynamics')
+    parser.add_argument('--data', type=str, default='lj13',
+                        help='dw4 | lj13')
+    parser.add_argument('--n_epochs', type=int, default=10)
+    parser.add_argument('--batch_size', type=int, default=100)
+    parser.add_argument('--lr', type=float, default=5e-4)
+    parser.add_argument('--n_data', type=int, default=100,
+                        help="Number of training samples")
+    parser.add_argument('--sweep_n_data', type=eval, default=False,
+                        help="sweep n_data instead of using the provided parameter")
+    parser.add_argument('--condition_time', type=eval, default=True,
+                        help='True | False')
+    parser.add_argument('--trace', type=str, default='hutch',
+                        help='hutch | exact')
+    parser.add_argument('--tanh', type=eval, default=True,
+                        help='use tanh in the coord_mlp')
+    parser.add_argument('--hutch_noise', type=str, default='bernoulli',
+                        help='gaussian | bernoulli')
+    parser.add_argument('--nf', type=int, default=32,
+                        help='number of layers')
+    parser.add_argument('--n_layers', type=int, default=3,
+                        help='number of layers')
+    parser.add_argument('--name', type=str, default='debug')
+    parser.add_argument('--wandb_usr', type=str, default='')
+    parser.add_argument('--n_report_steps', type=int, default=1)
+    parser.add_argument('--test_epochs', type=int, default=10)
+    parser.add_argument('--attention', type=eval, default=True,
+                        help='use attention in the EGNN')
+    parser.add_argument('--data_augmentation', type=eval, default=False,
+                        help='use data augmentation')
+    parser.add_argument('--weight_decay', type=float, default=1e-12,
+                        help='use data augmentation')
+    parser.add_argument('--ode_regularization', type=float, default=0)
+    parser.add_argument('--x_aggregation', type=str, default='sum',
+                        help='sum | mean')
+
+    args, unparsed_args = parser.parse_known_args()
+    if args.model == 'kernel_dynamics' and args.data == 'lj13':
+        args.model = 'kernel_dynamics_lj13'
+    print(args)
+
+    if args.data == 'dw4':
+        print(args.n_data)
+        n_particles = 4
+        n_dims = 2
+        dim = n_particles * n_dims  # system dimensionality
+    elif args.data == 'lj13':
+        n_particles = 13
+        n_dims = 3
+        dim = n_particles * n_dims
+    else:
+        raise Exception('wrong data partition: %s' % args.data)
+    
     if args.sweep_n_data:
         optimal_losses = []
 

@@ -24,7 +24,6 @@ class FFJORD(torch.nn.Module):
     """
     def __init__(self, dynamics, trace_method='hutch', ode_regularization=0, hutch_noise='gaussian'):
         super(FFJORD, self).__init__()
-
         self.odefunc = ODEfunc(
             dynamics, method=trace_method, ode_regularization=ode_regularization, hutch_noise=hutch_noise)
 
@@ -55,13 +54,13 @@ class FFJORD(torch.nn.Module):
     def rtol(self):
         return self._rtol if self.training else self._rtol_test
 
-    def forward(self, x, node_mask=None, edge_mask=None, context=None):
+    def forward(self, x, sampling=False, node_mask=None, edge_mask=None, context=None):
         ldj = x.new_zeros(x.shape[0])
         reg_term = x.new_zeros(x.shape[0])
 
         state = (x, ldj, reg_term)
 
-        self.odefunc.before_odeint(x)
+        self.odefunc.before_odeint(x, sampling)
         # print(state, self.odefunc, self.int_time, self.method)
 
         # self.odefunc.forward = self.odefunc.wrap_forward(
@@ -81,8 +80,8 @@ class FFJORD(torch.nn.Module):
         z, ldj, reg_term = zt[-1], ldjt[-1], reg_termt[-1]
         return z, ldj, reg_term
 
-    def reverse_fn(self, z, node_mask=None, edge_mask=None, context=None):
-        self.odefunc.before_odeint(z)
+    def reverse_fn(self, z, sampling=False, node_mask=None, edge_mask=None, context=None):
+        self.odefunc.before_odeint(z, sampling)
         if node_mask is not None or edge_mask is not None or context is not None:
             self.odefunc.dynamics.forward = self.odefunc.dynamics.wrap_forward(
                 node_mask, edge_mask, context)
@@ -97,8 +96,8 @@ class FFJORD(torch.nn.Module):
             self.odefunc.dynamics.forward = self.odefunc.dynamics.unwrap_forward()
         return xt
 
-    def reverse(self, z, node_mask=None, edge_mask=None, context=None):
-        xt = self.reverse_fn(z, node_mask, edge_mask, context)
+    def reverse(self, z, sampling=False, node_mask=None, edge_mask=None, context=None):
+        xt = self.reverse_fn(z, sampling, node_mask, edge_mask, context)
         x = xt[-1]
         return x
 
@@ -127,6 +126,8 @@ class ODEfunc(torch.nn.Module):
     @staticmethod
     def hutch_trace(f, y, e=None):
         """Hutchinson's estimator for the Jacobian trace"""
+        if e == None:
+            e = torch.randn_like(f)
         e_dzdx = torch.autograd.grad(f, y, e, create_graph=True)[0]
         e_dzdx_e = e_dzdx * e
         approx_tr_dzdx = sum_except_batch(e_dzdx_e)
@@ -159,13 +160,17 @@ class ODEfunc(torch.nn.Module):
             tr_dzdx += torch.autograd.grad(f[batch_idcs].sum(), y, create_graph=True)[0][batch_idcs]
         return tr_dzdx
 
-    def before_odeint(self, tensor):
+    def before_odeint(self, tensor, sampling=False):
         self.num_evals = 0
         if self.method == 'hutch':
 
             if self.hutch_noise == 'gaussian':
                 # With _eps ~ Normal(0, 1).
-                self._eps = torch.randn_like(tensor)
+                if sampling:
+                    print('eps')
+                    self._eps = None
+                else:
+                    self._eps = torch.randn_like(tensor)
             elif self.hutch_noise == 'bernoulli':
                 # With _eps ~ Rademacher (== Bernoulli on -1 +1 with 50/50 chance).
                 self._eps = torch.randint(low=0, high=2, size=tensor.size()).to(tensor) * 2 - 1

@@ -8,7 +8,7 @@ from deprecated.eqnode.densenet import DenseNet
 from deprecated.eqnode.dynamics import SchNet, SimpleEqDynamics
 from flows.ffjord import FFJORD
 from deprecated.eqnode.kernels import RbfEncoder
-from deprecated.eqnode.dynamics import KernelDynamics, KernelDynamics_inner
+from deprecated.eqnode.dynamics import KernelDynamics, KernelDynamics_inner, KernelDynamics_inner_old, SimpleMLPDynamics
 
 
 def get_model(args, dim, n_particles):
@@ -24,7 +24,7 @@ def get_model(args, dim, n_particles):
         kernel_mus = kernel_mus.cuda()
         kernel_gammas = kernel_gammas.cuda()
 
-    rbf_encoder = RbfEncoder(kernel_mus, kernel_gammas.log(), trainable=False)
+    rbf_encoder = RbfEncoder(kernel_mus, kernel_gammas.log(), trainable=True)
 
     if args.model == 'schnet':
         schnet = SchNet(
@@ -57,8 +57,17 @@ def get_model(args, dim, n_particles):
                                     activation=torch.nn.Tanh()),
             rbf_encoder=rbf_encoder,
             n_particles=n_particles,
-            n_dimesnion=dim // n_particles,
+            n_dimension=dim // n_particles,
             n_rbfs=n_rbfs,
+        )
+        flow = FFJORD(net_dynamics, trace_method='hutch', hutch_noise=args.hutch_noise)
+    
+    elif args.model == 'simple_mlp_dynamics':
+        net_dynamics = SimpleMLPDynamics(
+            n_particles=n_particles,
+            n_dimension=dim // n_particles,
+            rbf_encoder=rbf_encoder,
+            n_rbfs=n_rbfs
         )
         flow = FFJORD(net_dynamics, trace_method='hutch', hutch_noise=args.hutch_noise)
 
@@ -121,20 +130,22 @@ def get_model(args, dim, n_particles):
                                   gammas_time=gammas_time)
         
         flow = DiffEqFlow(dynamics=dynamics)
-    elif args.model == "kernel_dynamics_inner":
+    elif args.model == "new_dynamics":
         n_dimension = dim // n_particles
         d_max = 8
         n_rbfs = 50
-        mus = torch.linspace(0, d_max, n_rbfs)
+        mus = torch.linspace(-d_max, d_max, n_rbfs)
         mus.sort()
         gammas = 0.5 * torch.ones(n_rbfs)
         mus_time = torch.linspace(0, 1, 10)
         gammas_time = 0.3 * torch.ones(10)
-        dynamics = KernelDynamics_inner(n_particles, n_dimension, mus, gammas,
+        dynamics = KernelDynamics_inner_old(n_particles, n_dimension, mus, gammas,
                                   optimize_d_gammas=True,
                                   optimize_t_gammas=True,
                                   mus_time=mus_time,
                                   gammas_time=gammas_time)
+        # dynamics = HutchinsonEstimator(dynamics, brute_force=False)
+        # flow = DiffEqFlow(dynamics=dynamics)
     # elif args.model == 'our_dynamics_reimplementation':
     #     net_dynamics = OurDynamics(
     #         n_particles=n_particles,
@@ -151,9 +162,7 @@ def get_model(args, dim, n_particles):
         #                                               brute_force=args.brute_force)
         #     flow = RegularizedDiffEqFlow(dynamics)
         # else:
-        #     dynamics = HutchinsonEstimator(net_dynamics, brute_force=args.brute_force)
-        flow = DiffEqFlow(dynamics=dynamics)
-        #flow = FFJORD(dynamics, trace_method='hutch', hutch_noise=args.hutch_noise)
+        flow = FFJORD(dynamics, trace_method='hutch', hutch_noise=args.hutch_noise)
 
     elif args.model == "kernel_dynamics_lj13":
         n_dimension = dim // n_particles

@@ -169,6 +169,7 @@ class HutchinsonEstimator(torch.nn.Module):
                     divergence += ddxsi_dxs[:, [i]]
                     
             elif self._brute_force is False:
+
                 if self._reset_noise is True:
                     self._reset_noise = False
                     self._noise = torch.randint(low=0, high=2, size=xs.shape).to(xs) * 2 - 1

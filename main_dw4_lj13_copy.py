@@ -5,11 +5,14 @@ import wandb
 import time
 import logging
 import numpy as np
+import pdb
 from dw4_experiment import losses
 from dw4_experiment.dataset import get_data
 from dw4_experiment.models import get_model
 from flows.distributions import PositionPrior
 from flows.utils import remove_mean
+from torch.optim.lr_scheduler import CosineAnnealingLR
+from eval_and_plot import dw4_data_and_target, plot_data, plot_generating_flow
 import os
 
 
@@ -50,6 +53,7 @@ parser.add_argument('--weight_decay', type=float, default=1e-12,
 parser.add_argument('--ode_regularization', type=float, default=0)
 parser.add_argument('--x_aggregation', type=str, default='sum',
                     help='sum | mean')
+parser.add_argument('--model_num', type=str, default='0')
 
 args, unparsed_args = parser.parse_known_args()
 if args.model == 'kernel_dynamics' and args.data == 'lj13':
@@ -74,6 +78,7 @@ def main():
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     print(f"using devide: {device}")
     prior = PositionPrior()  # set up prior
+    data, target = dw4_data_and_target()
 
     flow = get_model(args, dim, n_particles)
     flow = flow.to(device)
@@ -89,42 +94,79 @@ def main():
     data_val, batch_iter_val = get_data(args, 'val', batch_size=100)
     data_test, batch_iter_test = get_data(args, 'test', batch_size=100)
 
-    print("Max")
-    print(torch.max(data_train))
+    # print("Max")
+    # print(torch.max(data_train))
 
     # initial training with likelihood maximization on data set
     optim = torch.optim.AdamW(flow.parameters(), lr=args.lr, amsgrad=True,
                               weight_decay=args.weight_decay)
     print(flow)
 
+    # scheduler = CosineAnnealingLR(optim, T_max=50)
+
+
     best_val_loss = 1e8
     best_test_loss = 1e8
 
-    log_path = f"{args.data}_logs/training_log_inner_n_data_{args.n_data}.txt"
+    log_path = f"{args.data}_train_logs/{args.model}/n_data_{args.n_data}_{args.model_num}.txt"
     os.makedirs(os.path.dirname(log_path), exist_ok=True)
     with open(log_path, 'a'):
         pass
 
-    save_dir_best = f'saved_models_{args.data}/best_model_inner_n_data_{args.n_data}.pth'
+    nll_log_path = f"{args.data}_nll_logs/{args.model}/n_data_{args.n_data}_{args.model_num}.txt"
+    os.makedirs(os.path.dirname(nll_log_path), exist_ok=True)
+    with open(log_path, 'a'):
+        pass
+
+    # Create two separate loggers
+    logger1 = logging.getLogger("losses")
+    logger2 = logging.getLogger("likelihoods")
+
+    # Set log level
+    logger1.setLevel(logging.INFO)
+    logger2.setLevel(logging.INFO)
+
+    # Create file handlers
+    file_handler1 = logging.FileHandler(log_path)
+    file_handler2 = logging.FileHandler(nll_log_path)
+
+    # Create console handler (optional, if you want logs in the console too)
+    # console_handler = logging.StreamHandler()
+
+    # Define log format
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+
+    # Add formatter to handlers
+    file_handler1.setFormatter(formatter)
+    file_handler2.setFormatter(formatter)
+    # console_handler.setFormatter(formatter) 
+
+    # Add handlers to loggers
+    logger1.addHandler(file_handler1)
+    logger2.addHandler(file_handler2)
+    # logger1.addHandler(console_handler)  
+    # logger2.addHandler(console_handler)  
+    
+    save_dir_best = f'saved_models_{args.data}/best_model_{args.model}/n_data_{args.n_data}/model_num_{args.model_num}.pth'
     os.makedirs(os.path.dirname(save_dir_best) , exist_ok=True)
     
     # Set up logging
-    logging.basicConfig(
-        level=logging.INFO,  # Set log level to INFO to capture detailed information
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        handlers=[
-            logging.FileHandler(log_path),  # Log to a file named 'training_log.txt'
-            logging.StreamHandler()  # Log to the console
-        ]
-    )
+    # logging.basicConfig(
+    #     level=logging.INFO,  # Set log level to INFO to capture detailed information
+    #     format='%(asctime)s - %(levelname)s - %(message)s',
+    #     handlers=[
+    #         logging.FileHandler(log_path),  # Log to a file named 'training_log.txt'
+    #         logging.StreamHandler()  # Log to the console
+    #     ]
+    # )
 
     for epoch in range(args.n_epochs):
         start_epoch_time = time.time()  # Start time for this epoch
         nll_epoch = []
         flow.set_trace(args.trace)
-        
+        # pdb.set_trace()
         logging.info(f"Starting Epoch {epoch}/{args.n_epochs}...")
-        
+        print(f"Starting Epoch {epoch}/{args.n_epochs}...")
         for it, idxs in enumerate(batch_iter_train):
             batch = data_train[idxs]
             assert batch.size(0) == args.batch_size
@@ -141,39 +183,71 @@ def main():
 
             # transform batch through flow
             if 'kernel_dynamics' in args.model:
-                loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll_kerneldynamics(args, flow, prior, batch, n_particles, n_dims)
+                # loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll(args, flow, prior, batch)
+                loss, nll, reg_term, mean_abs_z, log_pz, dlogp, nll_ = losses.compute_loss_and_nll_kerneldynamics(args, flow, prior, batch, n_particles, n_dims)
             else:
                 loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll(args, flow, prior, batch)
             # standard nll from forward KL
 
+            plot_generating_flow(args, data, flow, prior, target, epoch=epoch)
+
             loss.backward()
+            # Compute and store gradient statistics
+            grad_stats = []
+            total_grad_norm = 0.0
 
-            optim.step()
+            for name, param in flow.named_parameters():
+                if param.grad is not None:
+                    grad_mean = param.grad.mean().item()
+                    grad_std = param.grad.std().item()
+                    param_norm = param.grad.norm().item()
+                    total_grad_norm += param_norm ** 2
+                    grad_stats.append(f"{name}: mean={grad_mean:.6f}, std={grad_std:.6f}, norm={param_norm:.6f}")
 
+            # Compute total gradient norm
+            total_grad_norm = total_grad_norm ** 0.5
+
+            optim.step()  # Update model parameters
+            # scheduler.step()
+            # Log loss and gradients at reporting steps
             if it % args.n_report_steps == 0:
-                logging.info(f"Epoch: {epoch}, Iter: {it}/{len(batch_iter_train)}, NLL: {nll.item():.4f}, Reg term: {reg_term.item():.3f}")
+                logger1.info(f"Epoch: {epoch}, Iter: {it}/{len(batch_iter_train)}, "
+                            f"NLL: {nll.item():.4f}, Reg term: {reg_term.item():.3f}, Total Grad Norm: {total_grad_norm:.6f}")
+                # logger1.info(f"prior loglikelihood: {log_pz.mean().item()}, dlogp {dlogp.mean().item()}")
+                # for grad_stat in grad_stats:
+                #     logger1.info(f"  {grad_stat}")  # Log each parameter's gradient info
 
             nll_epoch.append(nll.item())
 
         # Log Epoch NLL
-        logging.info(f"Epoch {epoch} - Mean Train NLL: {np.mean(nll_epoch):.4f}")
+            import json
+            # logger2.info(json.dumps({
+            #     "nlls": nll_.detach().cpu().tolist(),
+            #     "log_pzs": log_pz.detach().cpu().tolist(),
+            #     "dlogps": dlogp.detach().cpu().tolist()
+            # # }))
+            # logger2.info(f"nlls : {nll_.tolist()}")
+            # logger2.info(f"log_pzs : {log_pz.tolist()}")
+            # logger2.info(f"dlogps : {dlogp.tolist()}")
+        logger1.info(f"Epoch {epoch} Mean Train NLL: {np.mean(nll_epoch):.4f}")
 
-        if epoch % args.test_epochs == 0:
-            val_loss = test(args, data_val, batch_iter_val, flow, prior, epoch, partition='val')
-            test_loss = test(args, data_test, batch_iter_test, flow, prior, epoch, partition='test')
+
+        # if epoch % args.test_epochs == 0:
+        #     val_loss = test(args, data_val, batch_iter_val, flow, prior, epoch, partition='val')
+        #     test_loss = test(args, data_test, batch_iter_test, flow, prior, epoch, partition='test')
             
-            if val_loss < best_val_loss:
-                best_val_loss = val_loss
-                best_test_loss = test_loss
-                torch.save(flow.state_dict(), save_dir_best)  
-                logging.info(f"Model saved at epoch {epoch} with best validation loss.")
+        #     if val_loss < best_val_loss:
+        #         best_val_loss = val_loss
+        #         best_test_loss = test_loss
+        #         torch.save(flow.state_dict(), save_dir_best)  
+        #         logging.info(f"Model saved at epoch {epoch} with best validation loss.")
             
-            logging.info(f"Best val loss: {best_val_loss:.4f} \t Best test loss: {best_test_loss:.4f}")
+        #     logging.info(f"Best val loss: {best_val_loss:.4f} \t Best test loss: {best_test_loss:.4f}")
 
         # End time for this epoch
         end_epoch_time = time.time()
         epoch_time = end_epoch_time - start_epoch_time  # Calculate the epoch time
-        logging.info(f"Epoch {epoch} completed in {epoch_time:.2f} seconds.")
+        print(f"Epoch {epoch} completed in {epoch_time:.2f} seconds.")
 
         logging.info("-" * 50)  # Separator for each epoch
 
@@ -196,8 +270,8 @@ def test(args, data_test, batch_iter_test, flow, prior, epoch, partition='test')
             batch = batch.to(device)
             batch = batch.view(batch.size(0), n_particles, n_dims)
             if 'kernel_dynamics' in args.model:
-                loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll_kerneldynamics(args, flow, prior, batch,
-                                                                                             n_particles, n_dims)
+                loss, nll, reg_term, mean_abs_z, log_pz, dlogp, nll_ = losses.compute_loss_and_nll_kerneldynamics(args, flow, prior, batch, n_particles, n_dims)
+                # loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll(args, flow, prior, batch)
             else:
                 loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll(args, flow, prior, batch)
             print("\r{}".format(it), nll, end="")
