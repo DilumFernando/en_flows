@@ -220,7 +220,7 @@ def main():
             nll_epoch.append(nll.item())
 
         # Log Epoch NLL
-            import json
+            # import json
             # logger2.info(json.dumps({
             #     "nlls": nll_.detach().cpu().tolist(),
             #     "log_pzs": log_pz.detach().cpu().tolist(),
