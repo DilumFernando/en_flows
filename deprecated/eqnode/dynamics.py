@@ -901,20 +901,13 @@ class KernelDynamics_inner_old(torch.nn.Module):
         # d = (norms + norms.permute(0, 2, 1)).sqrt()
         # d = (torch.square(inner_prods) + eps).sqrt()
         # d = (norms - 2 * inner_prods + norms.permute(0, 2, 1) + 1e-6).sqrt()
-        d = sums + sums.permute(0, 2, 1)
+        # d = sums + sums.permute(0, 2, 1)
+        d = -inner_prods
 
-        mask = ~torch.eye(self._n_particles, device=x.device, dtype=torch.bool).expand(
-            n_batch, -1, -1
-        )
-        d = (
-            d[mask]
-            .view(n_batch, self._n_particles, self._n_particles - 1)
-            .unsqueeze(dim=-1)
-        )
+        mask = ~torch.eye(self._n_particles, device=x.device, dtype=torch.bool).expand(n_batch, -1, -1)
+        d = (d[mask].view(n_batch, self._n_particles, self._n_particles - 1).unsqueeze(dim=-1))
 
-        force_mag, d_force_mag = self._force_mag(
-            t, d, derivative=compute_divergence
-        )  # both with shapes (B, N, N, 1)
+        force_mag, d_force_mag = self._force_mag(t, d, derivative=compute_divergence)  # both with shapes (B, N, N, 1)
         forces = (r * force_mag).sum(dim=-2)
         # forces = forces.view(n_batch, -1)
 
