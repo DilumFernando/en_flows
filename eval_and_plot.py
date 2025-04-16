@@ -128,25 +128,27 @@ def calculate_nll(energy_histogram, bin_edges):
     
     return nll
 
-def plot_hist(energies_bg, energies_data, min_energy):
-    plt.figure(figsize=(10, 6))
+def plot_hist(energies_bg, energies_data, min_energy, ax=None, label=None):
+    if ax is None:
+        fig, ax = plt.subplots()
     efac = 1
-    plt.hist(energies_bg, bins=100, density=True, range=(min_energy, 50), alpha=0.4, histtype='step', linewidth=1,
+    ax.hist(energies_bg, bins=100, density=True, range=(min_energy, 50), alpha=0.4, histtype='step', linewidth=1,
             color="r", label="samples");
 
-    plt.hist(energies_data, bins=100, density=True, range=(min_energy, 50),  alpha=0.4, color="g", histtype='step',
+    ax.hist(energies_data, bins=100, density=True, range=(min_energy, 50),  alpha=0.4, color="g", histtype='step',
             linewidth=4,
-            label="test data");
+            label=label);
     
     # plt.hist(energies_bg, bins=100, density=True, range=(min_energy, 0), alpha=0.4, histtype='step', linewidth=4,
     #          color="b", label="weighted samples", weights=np.exp(-log_w));
 
-    plt.xlabel("u(x)", fontsize=10)
-    plt.xticks(fontsize=10)
-    plt.yticks(fontsize=10)
-    plt.legend(fontsize=10)
+    ax.set_xlabel("u(x)", fontsize=10)
+    ax.xticks(fontsize=10)
+    ax.yticks(fontsize=10)
+    ax.set_title('Energy Histogram')
+    ax.legend(fontsize=10)
 
-def plot_generating_flow(args, data, flow, prior, target, latent, samples, epoch=None):
+def plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=None, label=None, epoch=None):
     # use OTD in the evaluation process
     
     flow._use_checkpoints = False # Testing mode
@@ -177,9 +179,9 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, epoch
     # log_w = log_w.view(-1).cpu().detach()
 
     if epoch == None:
-        plot_hist(energies_bg, energies_data, min_energy)
+        plot_hist(energies_bg, energies_data, min_energy, ax=ax, label=label)
     else:
-        plot_hist(energies_bg, energies_data, min_energy)
+        plot_hist(energies_bg, energies_data, min_energy, ax=ax, label=label)
 
         save_inner_epoch_path = f"generated_flows/{args.model}/n_data_{args.n_data}_{args.model_num}/epoch_{epoch}"
         os.makedirs(os.path.dirname(save_inner_epoch_path), exist_ok=True)
@@ -236,28 +238,29 @@ def main():
         print(f"\nTest results saved to {results_file}")
     else:
         print("plotting...")
-        models = []
-        flows = []
+        fig, ax = plt.subplots()
         prior = PositionPrior()
         samples = 10000
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         latent = prior.sample(size=[samples, 4, 2], device=device)
+        saved_models_dir = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}
+        # saved_models_dir = os.path.join(os.getcwd(), models_path)
 
-        for model_num in args.model_num_list:
-            if 'inner' or 'new' in args.model: 
-                model_path = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}/{model_num}.pth"
-                models.append(model_path)
-            else:
-                model_path = f"{model_dir}/best_model_n_data_{n_data}.pth"
-                print(f"{model_path}")
+        model_paths = [
+            os.path.join(saved_models_dir, fname)
+            for fname in os.listdir(saved_models_dir)
+            if os.path.isfile(os.path.join(saved_models_dir, fname))]
 
+        for i, model_path in enumerate(model_paths):
             flow = load_and_test_model(args, model_path, n_particles, n_dims)
             data, target = dw4_data_and_target()
-            plot_generating_flow(args, data, flow, prior, target, latent, samples)
+            label = f'model_{i+1}'
+            plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=ax, label=label)
 
         save_best_path = f"generated_hists/every_model"
         os.makedirs(os.path.dirname(save_best_path), exist_ok=True)
         plt.savefig(save_best_path)
+        print('done')
 
 
 if __name__ == "__main__":
