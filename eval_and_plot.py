@@ -270,7 +270,7 @@ def main():
         label = 'Generated samples - model_{args.model_num_list[0]}'
         plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=ax, label=label)
 
-        save_best_path = f"generated_hists/model_{args.model_num_list[0]}/"
+        save_best_path = f"generated_hists/model_{args.model_num_list[0]}.png"
         os.makedirs(os.path.dirname(save_best_path), exist_ok=True)
         plt.savefig(save_best_path)
         print('done')
