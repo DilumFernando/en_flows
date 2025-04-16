@@ -273,7 +273,6 @@ def main():
             save_best_path = f"generated_hists/model_{model_num}.png"
             os.makedirs(os.path.dirname(save_best_path), exist_ok=True)
             plt.savefig(save_best_path)
-            plt.close()
         print('done')
 
 
