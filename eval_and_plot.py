@@ -195,7 +195,7 @@ def main():
     parser.add_argument('--trace', type=str, default='hutch', help='hutch | exact')
     parser.add_argument('--data', type=str, default='lj13', help='dw4 | lj13')
     parser.add_argument('--plot', type=bool, default=False)
-    parser.add_argument('--model_num_list', nargs='+', default='0')  
+    parser.add_argument('--model_num_list', nargs='+',type=int, default='0')  
 
     args = parser.parse_args()
 
@@ -240,7 +240,6 @@ def main():
         samples = 10000
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         latent = prior.sample(size=[samples, 4, 2], device=device)
-        model_path = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}/{args.model_num_list[0]}.pth"
         # saved_models_dir = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}"
         # saved_models_dir = os.path.join(os.getcwd(), models_path)
 
@@ -264,15 +263,16 @@ def main():
             # data, target = dw4_data_and_target()
             # label = os.path.basename(model_path)[0]
             # plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=ax, label=label)
-        
-        flow = load_and_test_model(args, model_path, n_particles, n_dims)
-        data, target = dw4_data_and_target()
-        label = 'Generated samples - model_{args.model_num_list[0]}'
-        plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=ax, label=label)
+        for model_num in args.model_num_list:       
+            model_path = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}/{model_num}.pth"
+            flow = load_and_test_model(args, model_path, n_particles, n_dims)
+            data, target = dw4_data_and_target()
+            label = f'Generated samples - model_{model_num}'
+            plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=ax, label=label)
 
-        save_best_path = f"generated_hists/model_{args.model_num_list[0]}.png"
-        os.makedirs(os.path.dirname(save_best_path), exist_ok=True)
-        plt.savefig(save_best_path)
+            save_best_path = f"generated_hists/model_{model_num}.png"
+            os.makedirs(os.path.dirname(save_best_path), exist_ok=True)
+            plt.savefig(save_best_path)
         print('done')
 
 
