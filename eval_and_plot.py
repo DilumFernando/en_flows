@@ -143,8 +143,8 @@ def plot_hist(energies_bg, energies_data, min_energy, ax=None, label=None):
     #          color="b", label="weighted samples", weights=np.exp(-log_w));
 
     ax.set_xlabel("u(x)", fontsize=10)
-    ax.xticks(fontsize=10)
-    ax.yticks(fontsize=10)
+    ax.set_xticks([...])
+    ax.set_yticks([...])
     ax.set_title('Energy Histogram')
     ax.legend(fontsize=10)
 
@@ -154,11 +154,6 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=No
     flow._use_checkpoints = False # Testing mode
     flow.eval()
     
-    if epoch!=None:
-        samples = 10000
-    else:
-        samples = samples
-    #latent = prior.sample(500)
     if "kernel" or "new" in args.model:
         x, dlogp = flow(latent, inverse=True)
         x = x.view(samples, -1)
@@ -198,7 +193,7 @@ def main():
     parser.add_argument('--trace', type=str, default='hutch', help='hutch | exact')
     parser.add_argument('--data', type=str, default='lj13', help='dw4 | lj13')
     parser.add_argument('--plot', type=bool, default=False)
-    parser.add_argument('--model_num_list', nargs='+', default='0') 
+    # parser.add_argument('--model_num_list', nargs='+', default='0') 
 
     args = parser.parse_args()
 
@@ -243,7 +238,7 @@ def main():
         samples = 10000
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         latent = prior.sample(size=[samples, 4, 2], device=device)
-        saved_models_dir = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}
+        saved_models_dir = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}"
         # saved_models_dir = os.path.join(os.getcwd(), models_path)
 
         model_paths = [

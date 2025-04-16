@@ -79,6 +79,8 @@ def main():
     print(f"using devide: {device}")
     prior = PositionPrior()  # set up prior
     data, target = dw4_data_and_target()
+    samples = 10000
+    latent = prior.sample(size=[samples, 4, 2], device=device)
 
     flow = get_model(args, dim, n_particles)
     flow = flow.to(device)
@@ -147,7 +149,7 @@ def main():
     # logger1.addHandler(console_handler)  
     # logger2.addHandler(console_handler)  
     
-    save_dir_best = f'saved_models_{args.data}/best_model_{args.model}/n_data_{args.n_data}/model_num_{args.model_num}.pth'
+    save_dir_best = f'saved_models_{args.data}/best_model_{args.model}/n_data_{args.n_data}/{args.model_num}.pth'
     os.makedirs(os.path.dirname(save_dir_best) , exist_ok=True)
     
     # Set up logging
@@ -190,7 +192,7 @@ def main():
             # standard nll from forward KL
 
             if epoch%10 == 0:
-                plot_generating_flow(args, data, flow, prior, target, epoch=epoch)
+                plot_generating_flow(args, data, flow, prior, target, latent, samples, epoch=epoch)
 
             loss.backward()
             # Compute and store gradient statistics
@@ -212,7 +214,9 @@ def main():
             # scheduler.step()
             # Log loss and gradients at reporting steps
             if it % args.n_report_steps == 0:
-                logger1.info(f"Epoch: {epoch}, Iter: {it}/{len(batch_iter_train)}, "
+                # logger1.info(f"Epoch: {epoch}, Iter: {it}/{len(batch_iter_train)}, "
+                            # f"NLL: {nll.item():.4f}, Reg term: {reg_term.item():.3f}, Total Grad Norm: {total_grad_norm:.6f}")
+                print(f"Epoch: {epoch}, Iter: {it}/{len(batch_iter_train)}, "
                             f"NLL: {nll.item():.4f}, Reg term: {reg_term.item():.3f}, Total Grad Norm: {total_grad_norm:.6f}")
                 # logger1.info(f"prior loglikelihood: {log_pz.mean().item()}, dlogp {dlogp.mean().item()}")
                 # for grad_stat in grad_stats:
@@ -230,20 +234,20 @@ def main():
             # logger2.info(f"nlls : {nll_.tolist()}")
             # logger2.info(f"log_pzs : {log_pz.tolist()}")
             # logger2.info(f"dlogps : {dlogp.tolist()}")
-        logger1.info(f"Epoch {epoch} Mean Train NLL: {np.mean(nll_epoch):.4f}")
+        # logger1.info(f"Epoch {epoch} Mean Train NLL: {np.mean(nll_epoch):.4f}")
+        print(f"Epoch {epoch} Mean Train NLL: {np.mean(nll_epoch):.4f}")
 
-
-        if epoch % args.test_epochs == 0:
-            val_loss = test(args, data_val, batch_iter_val, flow, prior, epoch, partition='val')
-            test_loss = test(args, data_test, batch_iter_test, flow, prior, epoch, partition='test')
+       if epoch % args.test_epochs == 0:
+           val_loss = test(args, data_val, batch_iter_val, flow, prior, epoch, partition='val')
+           test_loss = test(args, data_test, batch_iter_test, flow, prior, epoch, partition='test')
             
-        if val_loss < best_val_loss:
-            best_val_loss = val_loss
-            best_test_loss = test_loss
-            torch.save(flow.state_dict(), save_dir_best)  
-            # logging.info(f"Model saved at epoch {epoch} with best validation loss.")
-            
-            # logging.info(f"Best val loss: {best_val_loss:.4f} \t Best test loss: {best_test_loss:.4f}")
+       if val_loss < best_val_loss:
+           best_val_loss = val_loss
+           best_test_loss = test_loss
+           torch.save(flow.state_dict(), save_dir_best)  
+           # logging.info(f"Model saved at epoch {epoch} with best validation loss.")
+           
+           # logging.info(f"Best val loss: {best_val_loss:.4f} \t Best test loss: {best_test_loss:.4f}")
 
         # End time for this epoch
         end_epoch_time = time.time()
