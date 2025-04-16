@@ -241,17 +241,25 @@ def main():
         saved_models_dir = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}"
         # saved_models_dir = os.path.join(os.getcwd(), models_path)
 
-        model_paths = [
-            os.path.join(saved_models_dir, fname)
-            for fname in os.listdir(saved_models_dir)
-            if os.path.isfile(os.path.join(saved_models_dir, fname))]
+        model_paths = sorted(
+            [
+                os.path.join(saved_models_dir, fname)
+                for fname in os.listdir(saved_models_dir)
+                if os.path.isfile(os.path.join(saved_models_dir, fname))
+            ],
+            key=lambda x: int(os.path.splitext(os.path.basename(x))[0]))
 
+        # model_paths = [
+            # os.path.join(saved_models_dir, fname)
+            # for fname in os.listdir(saved_models_dir)
+            # if os.path.isfile(os.path.join(saved_models_dir, fname))]
+# 
         print(model_paths)  
 
-        for i, model_path in enumerate(model_paths):
+        for model_path in model_paths:
             flow = load_and_test_model(args, model_path, n_particles, n_dims)
             data, target = dw4_data_and_target()
-            label = f'model_{i+1}'
+            label = os.path.basename(model_path)[0]
             plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=ax, label=label)
 
         save_best_path = f"generated_hists/every_model"
