@@ -143,8 +143,8 @@ def plot_hist(energies_bg, energies_data, min_energy, ax=None, label=None):
     #          color="b", label="weighted samples", weights=np.exp(-log_w));
 
     ax.set_xlabel("u(x)", fontsize=10)
-    ax.set_xticks([...])
-    ax.set_yticks([...])
+    # ax.set_xticks([...])
+    # ax.set_yticks([...])
     ax.set_title('Energy Histogram')
     ax.legend(fontsize=10)
 
@@ -245,6 +245,8 @@ def main():
             os.path.join(saved_models_dir, fname)
             for fname in os.listdir(saved_models_dir)
             if os.path.isfile(os.path.join(saved_models_dir, fname))]
+
+        print(model_paths)  
 
         for i, model_path in enumerate(model_paths):
             flow = load_and_test_model(args, model_path, n_particles, n_dims)

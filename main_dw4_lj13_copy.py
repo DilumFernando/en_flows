@@ -237,25 +237,24 @@ def main():
         # logger1.info(f"Epoch {epoch} Mean Train NLL: {np.mean(nll_epoch):.4f}")
         print(f"Epoch {epoch} Mean Train NLL: {np.mean(nll_epoch):.4f}")
 
-       if epoch % args.test_epochs == 0:
-           val_loss = test(args, data_val, batch_iter_val, flow, prior, epoch, partition='val')
-           test_loss = test(args, data_test, batch_iter_test, flow, prior, epoch, partition='test')
-            
-       if val_loss < best_val_loss:
-           best_val_loss = val_loss
-           best_test_loss = test_loss
-           torch.save(flow.state_dict(), save_dir_best)  
-           # logging.info(f"Model saved at epoch {epoch} with best validation loss.")
-           
-           # logging.info(f"Best val loss: {best_val_loss:.4f} \t Best test loss: {best_test_loss:.4f}")
+        if epoch % args.test_epochs == 0:
+            val_loss = test(args, data_val, batch_iter_val, flow, prior, epoch, partition='val')
+            test_loss = test(args, data_test, batch_iter_test, flow, prior, epoch, partition='test')
+
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            best_test_loss = test_loss
+            torch.save(flow.state_dict(), save_dir_best)  
+            # logging.info(f"Model saved at epoch {epoch} with best validation loss.")
+
+            # logging.info(f"Best val loss: {best_val_loss:.4f} \t Best test loss: {best_test_loss:.4f}")
 
         # End time for this epoch
         end_epoch_time = time.time()
         epoch_time = end_epoch_time - start_epoch_time  # Calculate the epoch time
         print(f"Epoch {epoch} completed in {epoch_time:.2f} seconds.")
 
-        # logging.info("-" * 50)  # Separator for each epoch
-
+        # logging.info("-" * 50)  # Separator for each epoch 
     return best_test_loss
 
 
