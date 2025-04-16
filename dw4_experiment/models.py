@@ -130,7 +130,7 @@ def get_model(args, dim, n_particles):
                                   gammas_time=gammas_time)
         
         flow = DiffEqFlow(dynamics=dynamics)
-    elif args.model == "new_dynamics":
+    elif args.model == "kernel_dynamics_inner" or "new_dynamics":
         n_dimension = dim // n_particles
         d_max = 8
         n_rbfs = 50

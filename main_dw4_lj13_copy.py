@@ -233,24 +233,24 @@ def main():
         logger1.info(f"Epoch {epoch} Mean Train NLL: {np.mean(nll_epoch):.4f}")
 
 
-        # if epoch % args.test_epochs == 0:
-        #     val_loss = test(args, data_val, batch_iter_val, flow, prior, epoch, partition='val')
-        #     test_loss = test(args, data_test, batch_iter_test, flow, prior, epoch, partition='test')
+        if epoch % args.test_epochs == 0:
+            val_loss = test(args, data_val, batch_iter_val, flow, prior, epoch, partition='val')
+            test_loss = test(args, data_test, batch_iter_test, flow, prior, epoch, partition='test')
             
-        #     if val_loss < best_val_loss:
-        #         best_val_loss = val_loss
-        #         best_test_loss = test_loss
-        #         torch.save(flow.state_dict(), save_dir_best)  
-        #         logging.info(f"Model saved at epoch {epoch} with best validation loss.")
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            best_test_loss = test_loss
+            torch.save(flow.state_dict(), save_dir_best)  
+            # logging.info(f"Model saved at epoch {epoch} with best validation loss.")
             
-        #     logging.info(f"Best val loss: {best_val_loss:.4f} \t Best test loss: {best_test_loss:.4f}")
+            # logging.info(f"Best val loss: {best_val_loss:.4f} \t Best test loss: {best_test_loss:.4f}")
 
         # End time for this epoch
         end_epoch_time = time.time()
         epoch_time = end_epoch_time - start_epoch_time  # Calculate the epoch time
         print(f"Epoch {epoch} completed in {epoch_time:.2f} seconds.")
 
-        logging.info("-" * 50)  # Separator for each epoch
+        # logging.info("-" * 50)  # Separator for each epoch
 
     return best_test_loss
 
@@ -270,7 +270,7 @@ def test(args, data_test, batch_iter_test, flow, prior, epoch, partition='test')
             batch = torch.Tensor(data_test[batch_idxs])
             batch = batch.to(device)
             batch = batch.view(batch.size(0), n_particles, n_dims)
-            if 'kernel_dynamics' in args.model:
+            if 'kernel_dynamics' or 'new_dynamics' in args.model:
                 loss, nll, reg_term, mean_abs_z, log_pz, dlogp, nll_ = losses.compute_loss_and_nll_kerneldynamics(args, flow, prior, batch, n_particles, n_dims)
                 # loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll(args, flow, prior, batch)
             else:
@@ -281,7 +281,7 @@ def test(args, data_test, batch_iter_test, flow, prior, epoch, partition='test')
 
         print()
         print(f'%s nll {data_nll}' % partition)
-        wandb.log({"Test NLL": data_nll}, commit=False)
+        # wandb.log({"Test NLL": data_nll}, commit=False)
 
         # TODO: no evaluation on hold out data yet
     flow.set_trace(args.trace)

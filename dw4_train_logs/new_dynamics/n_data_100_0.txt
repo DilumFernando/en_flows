@@ -1,0 +1,2 @@
+2025-04-16 11:26:04,393 - INFO - Epoch: 0, Iter: 0/1, NLL: 16.9850, Reg term: 0.000, Total Grad Norm: 21.175194
+2025-04-16 11:26:04,394 - INFO - Epoch 0 Mean Train NLL: 16.9850
