@@ -131,9 +131,9 @@ def calculate_nll(energy_histogram, bin_edges):
 def plot_hist(energies_bg, energies_data, min_energy, ax=None, label=None):
     if ax is None:
         fig, ax = plt.subplots()
-    efac = 1
-    ax.hist(energies_bg, bins=100, density=True, range=(min_energy, 50), alpha=0.4, histtype='step', linewidth=1,
-            color="r", label="samples");
+    # efac = 1 
+        ax.hist(energies_bg, bins=100, density=True, range=(min_energy, 50), alpha=0.4, histtype='step', linewidth=1,
+                color="r", label="samples");
 
     ax.hist(energies_data, bins=100, density=True, range=(min_energy, 50),  alpha=0.4, color="g", histtype='step',
             linewidth=4,
@@ -174,6 +174,8 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=No
     # log_w = log_w.view(-1).cpu().detach()
 
     if epoch == None:
+        ax.hist(energies_bg, bins=100, density=True, range=(min_energy, 50), alpha=0.4, histtype='step', linewidth=1,
+                color="r", label="True samples");
         plot_hist(energies_bg, energies_data, min_energy, ax=ax, label=label)
     else:
         plot_hist(energies_bg, energies_data, min_energy, ax=ax, label=label)
@@ -193,7 +195,7 @@ def main():
     parser.add_argument('--trace', type=str, default='hutch', help='hutch | exact')
     parser.add_argument('--data', type=str, default='lj13', help='dw4 | lj13')
     parser.add_argument('--plot', type=bool, default=False)
-    # parser.add_argument('--model_num_list', nargs='+', default='0') 
+    parser.add_argument('--model_num_list', nargs='+', default='0')  
 
     args = parser.parse_args()
 
@@ -238,31 +240,37 @@ def main():
         samples = 10000
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         latent = prior.sample(size=[samples, 4, 2], device=device)
-        saved_models_dir = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}"
+        model_path = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}/{args.model_num_list[0]}.pth"
+        # saved_models_dir = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}"
         # saved_models_dir = os.path.join(os.getcwd(), models_path)
 
-        model_paths = sorted(
-            [
-                os.path.join(saved_models_dir, fname)
-                for fname in os.listdir(saved_models_dir)
-                if os.path.isfile(os.path.join(saved_models_dir, fname))
-            ],
-            key=lambda x: int(os.path.splitext(os.path.basename(x))[0]))
+        # model_paths = sorted(
+            # [
+                # os.path.join(saved_models_dir, fname)
+                # for fname in os.listdir(saved_models_dir)
+                # if os.path.isfile(os.path.join(saved_models_dir, fname))
+            # ],
+            # key=lambda x: int(os.path.splitext(os.path.basename(x))[0]))
 
         # model_paths = [
             # os.path.join(saved_models_dir, fname)
             # for fname in os.listdir(saved_models_dir)
             # if os.path.isfile(os.path.join(saved_models_dir, fname))]
-# 
-        print(model_paths)  
 
-        for model_path in model_paths:
-            flow = load_and_test_model(args, model_path, n_particles, n_dims)
-            data, target = dw4_data_and_target()
-            label = os.path.basename(model_path)[0]
-            plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=ax, label=label)
+        # print(model_paths)  
 
-        save_best_path = f"generated_hists/every_model"
+        # for model_path in model_paths:
+            # flow = load_and_test_model(args, model_path, n_particles, n_dims)
+            # data, target = dw4_data_and_target()
+            # label = os.path.basename(model_path)[0]
+            # plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=ax, label=label)
+        
+        flow = load_and_test_model(args, model_path, n_particles, n_dims)
+        data, target = dw4_data_and_target()
+        label = 'Generated samples - model_{args.model_num_list[0]}'
+        plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=ax, label=label)
+
+        save_best_path = f"generated_hists/model_{args.model_num_list[0]}/"
         os.makedirs(os.path.dirname(save_best_path), exist_ok=True)
         plt.savefig(save_best_path)
         print('done')
