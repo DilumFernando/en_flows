@@ -84,8 +84,8 @@ def main():
     flow = flow.to(device)
 
     # Log all args to wandb
-    wandb.init(entity=args.wandb_usr, project='se3flows', name=args.name, config=args)
-    wandb.save('*.txt')
+    # wandb.init(entity=args.wandb_usr, project='se3flows', name=args.name, config=args)
+    # wandb.save('*.txt')
     # logging.write_info_file(model=dynamics, FLAGS=args,
     #                         UNPARSED_ARGV=unparsed_args,
     #                         wandb_log_dir=wandb.run.dir)
@@ -182,14 +182,15 @@ def main():
             optim.zero_grad()
 
             # transform batch through flow
-            if 'kernel_dynamics' in args.model:
+            if 'kernel_dynamics' or 'new_dynamics' in args.model:
                 # loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll(args, flow, prior, batch)
                 loss, nll, reg_term, mean_abs_z, log_pz, dlogp, nll_ = losses.compute_loss_and_nll_kerneldynamics(args, flow, prior, batch, n_particles, n_dims)
             else:
                 loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll(args, flow, prior, batch)
             # standard nll from forward KL
 
-            plot_generating_flow(args, data, flow, prior, target, epoch=epoch)
+            if epoch%10 == 0:
+                plot_generating_flow(args, data, flow, prior, target, epoch=epoch)
 
             loss.backward()
             # Compute and store gradient statistics

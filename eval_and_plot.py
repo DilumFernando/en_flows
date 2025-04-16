@@ -135,7 +135,7 @@ def plot_generating_flow(args, data, flow, prior, target, epoch=None):
     flow._use_checkpoints = False # Testing mode
     flow.eval()
     
-    samples = 100
+    samples = 10000
     latent = prior.sample(size=[samples, 4, 2], device=device)
     #latent = prior.sample(500)
     if "kernel" in args.model:

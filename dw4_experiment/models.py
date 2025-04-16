@@ -145,7 +145,7 @@ def get_model(args, dim, n_particles):
                                   mus_time=mus_time,
                                   gammas_time=gammas_time)
         # dynamics = HutchinsonEstimator(dynamics, brute_force=False)
-        # flow = DiffEqFlow(dynamics=dynamics)
+        flow = DiffEqFlow(dynamics=dynamics)
     # elif args.model == 'our_dynamics_reimplementation':
     #     net_dynamics = OurDynamics(
     #         n_particles=n_particles,
@@ -162,7 +162,7 @@ def get_model(args, dim, n_particles):
         #                                               brute_force=args.brute_force)
         #     flow = RegularizedDiffEqFlow(dynamics)
         # else:
-        flow = FFJORD(dynamics, trace_method='hutch', hutch_noise=args.hutch_noise)
+        # flow = FFJORD(dynamics, trace_method='hutch', hutch_noise=args.hutch_noise)
 
     elif args.model == "kernel_dynamics_lj13":
         n_dimension = dim // n_particles
