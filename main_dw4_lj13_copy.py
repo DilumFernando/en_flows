@@ -216,8 +216,8 @@ def main():
             # scheduler.step()
             # Log loss and gradients at reporting steps
             if it % args.n_report_steps == 0:
-                # logger1.info(f"Epoch: {epoch}, Iter: {it}/{len(batch_iter_train)}, "
-                            # f"NLL: {nll.item():.4f}, Reg term: {reg_term.item():.3f}, Total Grad Norm: {total_grad_norm:.6f}")
+                logger1.info(f"Epoch: {epoch}, Iter: {it}/{len(batch_iter_train)}, "
+                            f"NLL: {nll.item():.4f}, Reg term: {reg_term.item():.3f}, Total Grad Norm: {total_grad_norm:.6f}")
                 print(f"Epoch: {epoch}, Iter: {it}/{len(batch_iter_train)}, "
                             f"NLL: {nll.item():.4f}, Reg term: {reg_term.item():.3f}, Total Grad Norm: {total_grad_norm:.6f}")
                 # logger1.info(f"prior loglikelihood: {log_pz.mean().item()}, dlogp {dlogp.mean().item()}")
