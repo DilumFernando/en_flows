@@ -53,7 +53,7 @@ parser.add_argument('--weight_decay', type=float, default=1e-12,
 parser.add_argument('--ode_regularization', type=float, default=0)
 parser.add_argument('--x_aggregation', type=str, default='sum',
                     help='sum | mean')
-parser.add_argument('--model_num', type=str, default='0')
+parser.add_argument('model_name', type=str, default='0')
 
 args, unparsed_args = parser.parse_known_args()
 if args.model == 'kernel_dynamics' and args.data == 'lj13':
@@ -110,12 +110,12 @@ def main():
     best_val_loss = 1e8
     best_test_loss = 1e8
 
-    log_path = f"{args.data}_train_logs/{args.model}/n_data_{args.n_data}_{args.model_num}.txt"
+    log_path = f"{args.data}_train_logs/{args.model}/n_data_{args.n_data}_{args.model_name}.txt"
     os.makedirs(os.path.dirname(log_path), exist_ok=True)
     with open(log_path, 'a'):
         pass
 
-    nll_log_path = f"{args.data}_nll_logs/{args.model}/n_data_{args.n_data}_{args.model_num}.txt"
+    nll_log_path = f"{args.data}_nll_logs/{args.model}/n_data_{args.n_data}_{args.model_name}.txt"
     os.makedirs(os.path.dirname(nll_log_path), exist_ok=True)
     with open(log_path, 'a'):
         pass
@@ -149,9 +149,11 @@ def main():
     # logger1.addHandler(console_handler)  
     # logger2.addHandler(console_handler)  
     
-    save_dir_best = f'saved_models_{args.data}/best_model_{args.model}/n_data_{args.n_data}/{args.model_num}.pth'
+    save_dir_best = f'saved_models_{args.data}/best_model_{args.model}/n_data_{args.n_data}/{args.model_name}.pth'
     os.makedirs(os.path.dirname(save_dir_best) , exist_ok=True)
-    
+
+    save_dir_final = f'saved_models_{args.data}/best_model_{args.model}/n_data_{args.n_data}/{args.model_name}_final.pth'
+    os.makedirs(os.path.dirname(save_dir_final) , exist_ok=True)
     # Set up logging
     # logging.basicConfig(
     #     level=logging.INFO,  # Set log level to INFO to capture detailed information
@@ -255,6 +257,7 @@ def main():
         print(f"Epoch {epoch} completed in {epoch_time:.2f} seconds.")
 
         # logging.info("-" * 50)  # Separator for each epoch 
+    torch.save(flow.state_dict(), save_dir_final)     
     return best_test_loss
 
 
