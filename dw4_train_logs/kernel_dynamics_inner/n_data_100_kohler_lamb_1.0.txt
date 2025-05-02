@@ -196,3 +196,16 @@
 2025-05-01 23:28:29,472 - INFO - Epoch: 72, Iter: 0/1, NLL: 12.3372, Reg term: 0.000, Total Grad Norm: 128.214637
 2025-05-01 23:28:37,902 - INFO - Epoch: 73, Iter: 0/1, NLL: 12.3087, Reg term: 0.000, Total Grad Norm: 109.710993
 2025-05-01 23:28:45,051 - INFO - Epoch: 74, Iter: 0/1, NLL: 12.2812, Reg term: 0.000, Total Grad Norm: 70.002477
+2025-05-02 00:24:52,089 - INFO - Epoch: 0, Iter: 0/1, NLL: 17.5863, Reg term: 0.000, Total Grad Norm: 264.883751
+2025-05-02 00:25:46,521 - INFO - Epoch: 1, Iter: 0/1, NLL: 17.3967, Reg term: 0.000, Total Grad Norm: 261.343769
+2025-05-02 00:25:55,151 - INFO - Epoch: 2, Iter: 0/1, NLL: 17.2059, Reg term: 0.000, Total Grad Norm: 235.757870
+2025-05-02 00:26:02,068 - INFO - Epoch: 3, Iter: 0/1, NLL: 17.0158, Reg term: 0.000, Total Grad Norm: 256.425426
+2025-05-02 00:26:10,022 - INFO - Epoch: 4, Iter: 0/1, NLL: 16.8235, Reg term: 0.000, Total Grad Norm: 216.500876
+2025-05-02 00:26:20,383 - INFO - Epoch: 5, Iter: 0/1, NLL: 16.6403, Reg term: 0.000, Total Grad Norm: 259.564410
+2025-05-02 00:26:31,906 - INFO - Epoch: 6, Iter: 0/1, NLL: 16.4531, Reg term: 0.000, Total Grad Norm: 237.706258
+2025-05-02 00:26:40,432 - INFO - Epoch: 7, Iter: 0/1, NLL: 16.2589, Reg term: 0.000, Total Grad Norm: 247.134714
+2025-05-02 00:26:49,555 - INFO - Epoch: 8, Iter: 0/1, NLL: 16.0590, Reg term: 0.000, Total Grad Norm: 256.634428
+2025-05-02 00:26:59,118 - INFO - Epoch: 9, Iter: 0/1, NLL: 15.8575, Reg term: 0.000, Total Grad Norm: 253.072072
+2025-05-02 00:27:12,889 - INFO - Epoch: 10, Iter: 0/1, NLL: 15.6557, Reg term: 0.000, Total Grad Norm: 249.879553
+2025-05-02 00:27:22,253 - INFO - Epoch: 11, Iter: 0/1, NLL: 15.4525, Reg term: 0.000, Total Grad Norm: 240.185043
+2025-05-02 00:27:33,160 - INFO - Epoch: 12, Iter: 0/1, NLL: 15.2459, Reg term: 0.000, Total Grad Norm: 242.773473

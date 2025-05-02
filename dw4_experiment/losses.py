@@ -64,13 +64,13 @@ def compute_loss_and_nll_kerneldynamics(args, flow, prior, target, device, batch
     nll_mean = nll.mean()
     loss = nll_mean
 
-    # if args.lamb > 0:
-         # latent = prior.sample(size=[bs, 4, 2], device=device)
-         # x, dlogp_x = flow(latent, inverse=True)
-         # x = x.view(bs, -1)
-         # kll = target.energy(x) - dlogp_x
-         # kll_mean = kll.mean()
-         # loss = (1 - args.lamb) * nll_mean + args.lamb * kll_mean
+    if args.lamb > 0:
+         latent = prior.sample(size=[bs, 4, 2], device=device)
+         x, dlogp_x = flow(latent)
+         x = x.view(bs, -1)
+         kll = target.energy(x) + dlogp_x
+         kll_mean = kll.mean()
+         loss = (1 - args.lamb) * nll_mean + args.lamb * kll_mean
  
     reg_term, mean_abs_z = torch.tensor([0.]), 0
     return loss, nll_mean, reg_term.to(z.device), mean_abs_z, log_pz, dlogp, nll
