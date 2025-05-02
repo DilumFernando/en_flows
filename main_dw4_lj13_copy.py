@@ -54,6 +54,7 @@ parser.add_argument('--ode_regularization', type=float, default=0)
 parser.add_argument('--x_aggregation', type=str, default='sum',
                     help='sum | mean')
 parser.add_argument('model_name', type=str, default='0')
+parser.add_argument('lamb', type=float, default=0.0)
 
 args, unparsed_args = parser.parse_known_args()
 if args.model == 'kernel_dynamics' and args.data == 'lj13':
@@ -110,12 +111,12 @@ def main():
     best_val_loss = 1e8
     best_test_loss = 1e8
 
-    log_path = f"{args.data}_train_logs/{args.model}/n_data_{args.n_data}_{args.model_name}.txt"
+    log_path = f"{args.data}_train_logs/{args.model}/n_data_{args.n_data}_{args.model_name}_lamb_{args.lamb}.txt"
     os.makedirs(os.path.dirname(log_path), exist_ok=True)
     with open(log_path, 'a'):
         pass
 
-    nll_log_path = f"{args.data}_nll_logs/{args.model}/n_data_{args.n_data}_{args.model_name}.txt"
+    nll_log_path = f"{args.data}_nll_logs/{args.model}/n_data_{args.n_data}_{args.model_name}_lamb_{args.lamb}.txt"
     os.makedirs(os.path.dirname(nll_log_path), exist_ok=True)
     with open(log_path, 'a'):
         pass
@@ -149,10 +150,10 @@ def main():
     # logger1.addHandler(console_handler)  
     # logger2.addHandler(console_handler)  
     
-    save_dir_best = f'saved_models_{args.data}/best_model_{args.model}/n_data_{args.n_data}/{args.model_name}.pth'
+    save_dir_best = f'saved_models_{args.data}/best_model_{args.model}/n_data_{args.n_data}/{args.model_name}_lamb_{args.lamb}.pth'
     os.makedirs(os.path.dirname(save_dir_best) , exist_ok=True)
 
-    save_dir_final = f'saved_models_{args.data}/best_model_{args.model}/n_data_{args.n_data}/{args.model_name}_final.pth'
+    save_dir_final = f'saved_models_{args.data}/best_model_{args.model}/n_data_{args.n_data}/{args.model_name}_lamb_{args.lamb}/final.pth'
     os.makedirs(os.path.dirname(save_dir_final) , exist_ok=True)
     # Set up logging
     # logging.basicConfig(
@@ -188,7 +189,7 @@ def main():
             # transform batch through flow
             if 'kernel_dynamics' or 'new_dynamics' in args.model:
                 # loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll(args, flow, prior, batch)
-                loss, nll, reg_term, mean_abs_z, log_pz, dlogp, nll_ = losses.compute_loss_and_nll_kerneldynamics(args, flow, prior, batch, n_particles, n_dims)
+                loss, nll, reg_term, mean_abs_z, log_pz, dlogp, nll_ = losses.compute_loss_and_nll_kerneldynamics(args, flow, prior, target, device, batch, n_particles, n_dims)
             else:
                 loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll(args, flow, prior, batch)
             # standard nll from forward KL
@@ -264,6 +265,7 @@ def main():
 def test(args, data_test, batch_iter_test, flow, prior, epoch, partition='test'):
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     # use OTD in the evaluation process
+    data, target = dw4_data_and_target()
     flow._use_checkpoints = False
     if args.data == 'dw4':
         flow.set_trace('exact')
@@ -277,7 +279,7 @@ def test(args, data_test, batch_iter_test, flow, prior, epoch, partition='test')
             batch = batch.to(device)
             batch = batch.view(batch.size(0), n_particles, n_dims)
             if 'kernel_dynamics' or 'new_dynamics' in args.model:
-                loss, nll, reg_term, mean_abs_z, log_pz, dlogp, nll_ = losses.compute_loss_and_nll_kerneldynamics(args, flow, prior, batch, n_particles, n_dims)
+                loss, nll, reg_term, mean_abs_z, log_pz, dlogp, nll_ = losses.compute_loss_and_nll_kerneldynamics(args, flow, prior, target, device, batch, n_particles, n_dims)
                 # loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll(args, flow, prior, batch)
             else:
                 loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll(args, flow, prior, batch)

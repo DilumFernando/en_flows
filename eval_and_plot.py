@@ -156,7 +156,7 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=No
     
     # Changes based on the flow type (Diffeq for kernel/new and FFJORD for egnn) 
     if "kernel" or "new" in args.model:
-        x, dlogp = flow(latent, inverse=True)
+        x, dlogp = flow(latent, inverse=False)
         x = x.view(samples, -1)
     else:
         sampling = True
@@ -181,7 +181,7 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=No
     else:
         plot_hist(energies_bg, energies_data, min_energy, ax=ax, label=label)
 
-        save_inner_epoch_path = f"generated_flows/{args.model}/n_data_{args.n_data}_{args.model_name}/epoch_{epoch}"
+        save_inner_epoch_path = f"generated_flows/{args.model}/n_data_{args.n_data}_{args.model_name}_lamb_{args.lamb}/epoch_{epoch}"
         os.makedirs(os.path.dirname(save_inner_epoch_path), exist_ok=True)
         plt.savefig(save_inner_epoch_path)
         

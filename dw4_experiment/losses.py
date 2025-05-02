@@ -52,13 +52,27 @@ def compute_loss_and_nll(args, flow, prior, batch):
 
 
 
-def compute_loss_and_nll_kerneldynamics(args, flow, prior, batch, n_particles, n_dims):
+def compute_loss_and_nll_kerneldynamics(args, flow, prior, target, device, batch, n_particles, n_dims):
     bs = batch.size(0)
-    z, dlogp = flow(batch.view(bs, -1))
+
+    z, dlogp = flow(batch.view(bs, -1), inverse=True)
     z = z.view(bs, n_particles, n_dims)
+
     log_pz = prior(z).view(-1)
-    nll = -(log_pz - dlogp)
+    nll = -log_pz + dlogp
+
     nll_mean = nll.mean()
     loss = nll_mean
+
+    # if args.lamb > 0:
+         # latent = prior.sample(size=[bs, 4, 2], device=device)
+         # x, dlogp_x = flow(latent, inverse=True)
+         # x = x.view(bs, -1)
+         # kll = target.energy(x) - dlogp_x
+         # kll_mean = kll.mean()
+         # loss = (1 - args.lamb) * nll_mean + args.lamb * kll_mean
+ 
     reg_term, mean_abs_z = torch.tensor([0.]), 0
     return loss, nll_mean, reg_term.to(z.device), mean_abs_z, log_pz, dlogp, nll
+
+
