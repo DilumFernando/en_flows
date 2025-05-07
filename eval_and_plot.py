@@ -289,7 +289,7 @@ def main():
             # plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=ax, label=label)
         for model_name in args.model_names:       
             for lamb in lambs:
-                model_path = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}/{model_name}_lamb_{lamb}.pth"
+                model_path = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}/{model_name}_lamb_{lamb}/final.pth"
                 flow = load_and_test_model(args, model_path, n_particles, n_dims)
                 data, target = dw4_data_and_target()
                 plot_generating_flow(args, data, flow, prior, target, latent, samples, model_name, lamb)
