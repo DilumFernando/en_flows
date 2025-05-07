@@ -148,7 +148,7 @@ def plot_hist(energies_bg, energies_data, min_energy):
     ax.set_title('Energy Histogram')
     ax.legend(fontsize=10)
 
-def plot_generating_flow(args, data, flow, prior, target, latent, samples, model_name, ax=None, label=None, epoch=None):
+def plot_generating_flow(args, data, flow, prior, target, latent, samples, model_name, lamb, ax=None, label=None, epoch=None):
     # use OTD in the evaluation process
     
     flow._use_checkpoints = False # Testing mode
@@ -156,7 +156,7 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, model
     
     # Changes based on the flow type (Diffeq for kernel/new and FFJORD for egnn) 
     if "kernel" or "new" in args.model:
-        x, dlogp = flow(latent, inverse=True)
+        x, dlogp = flow(latent, inverse=False)
         x = x.view(samples, -1)
     else:
         sampling = True
@@ -195,7 +195,7 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, model
         plt.title('Energy Histogram')
         plt.legend(fontsize=10)
 
-        save_best_path = f"final_generated_hists/model_{model_name}.png"
+        save_best_path = f"final_generated_hists/model_{model_name}_lamb_{lamb}.png"
         os.makedirs(os.path.dirname(save_best_path), exist_ok=True)
         plt.savefig(save_best_path)
 
@@ -292,7 +292,7 @@ def main():
                 model_path = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}/{model_name}_lamb_{lamb}.pth"
                 flow = load_and_test_model(args, model_path, n_particles, n_dims)
                 data, target = dw4_data_and_target()
-                plot_generating_flow(args, data, flow, prior, target, latent, samples, model_name)
+                plot_generating_flow(args, data, flow, prior, target, latent, samples, model_name, lamb)
 
             # save_best_path = f"final_generated_hists/model_{model_name}.png"
             # os.makedirs(os.path.dirname(save_best_path), exist_ok=True)
