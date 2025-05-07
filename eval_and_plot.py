@@ -128,27 +128,27 @@ def calculate_nll(energy_histogram, bin_edges):
     
     return nll
 
-def plot_hist(energies_bg, energies_data, min_energy, ax=None, label=None):
-    if ax is None:
-        fig, ax = plt.subplots()
+def plot_hist(energies_bg, energies_data, min_energy):
+    
+    fig, ax = plt.subplots()
     # efac = 1 
-        ax.hist(energies_bg, bins=100, density=True, range=(min_energy, 50), alpha=0.4, histtype='step', linewidth=1,
-                color="r", label="samples");
+    ax.hist(energies_bg, bins=100, density=True, range=(min_energy, 50), alpha=0.4, histtype='step', linewidth=1,
+                color="r", label="Generated Samples");
 
     ax.hist(energies_data, bins=100, density=True, range=(min_energy, 50),  alpha=0.4, color="g", histtype='step',
             linewidth=4,
-            label=label);
+            label='True Samples');
     
-    # plt.hist(energies_bg, bins=100, density=True, range=(min_energy, 0), alpha=0.4, histtype='step', linewidth=4,
-    #          color="b", label="weighted samples", weights=np.exp(-log_w));
-
+    ax.hist(energies_bg, bins=100, density=True, range=(min_energy, 0), alpha=0.4, histtype='step', linewidth=4,
+    color="b", label="Final Weighted Samples", weights=np.exp(-log_w));
+# 
     ax.set_xlabel("u(x)", fontsize=10)
     # ax.set_xticks([...])
-    # ax.set_yticks([...])
+    # ax.set_yticks([...]) 
     ax.set_title('Energy Histogram')
     ax.legend(fontsize=10)
 
-def plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=None, label=None, epoch=None):
+def plot_generating_flow(args, data, flow, prior, target, latent, samples, model_name, ax=None, label=None, epoch=None):
     # use OTD in the evaluation process
     
     flow._use_checkpoints = False # Testing mode
@@ -167,17 +167,37 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=No
     
     energies_data = target.energy(data[:samples]).numpy()
     energies_bg = target.energy(x).cpu().detach().view(-1).numpy()
-    # energies_prior = target.energy(latent).cpu().detach().numpy()
+    energies_prior = target.energy(latent).cpu().detach().numpy()
     min_energy = min(energies_data.min(), energies_bg.min())
     # max_energy = max(energies_data.max(), energies_bg.max())
 
-    # log_w = target.energy(x).view(-1) - prior(latent.view(samples, 4, 2)).view(-1) + dlogp.view(-1)
-    # log_w = log_w.view(-1).cpu().detach()
+    log_w = target.energy(x).view(-1) - prior(latent.view(samples, 4, 2)).view(-1) + dlogp.view(-1)
+    log_w = log_w.view(-1).cpu().detach()
 
     if epoch == None:
-        ax.hist(energies_bg, bins=100, density=True, range=(min_energy, 50), alpha=0.4, histtype='step', linewidth=1,
-                color="r", label="True samples");
-        plot_hist(energies_bg, energies_data, min_energy, ax=ax, label=label)
+        # ax.hist(energies_bg, bins=100, density=True, range=(min_energy, 50), alpha=0.4, histtype='step', linewidth=1,
+                # color="r", label="True samples");
+        # plot_hist(energies_bg, energies_data, min_energy)
+
+        plt.hist(energies_bg, bins=100, density=True, range=(min_energy, 50), alpha=0.4, histtype='step', linewidth=1,
+                color="r", label="Generated Samples");
+
+        plt.hist(energies_data, bins=100, density=True, range=(min_energy, 50),  alpha=0.4, color="g", histtype='step',
+            linewidth=4,
+            label='True Samples');
+    
+        # plt.hist(energies_bg, bins=100, density=True, range=(min_energy, 0), alpha=0.4, histtype='step', linewidth=4,
+        # color="b", label="Final Weighted Samples", weights=np.exp(-log_w));
+
+        plt.xlabel("u(x)", fontsize=10)
+        plt.xticks([...])
+        plt.yticks([...]) 
+        plt.title('Energy Histogram')
+        plt.legend(fontsize=10)
+
+        save_best_path = f"final_generated_hists/model_{model_name}.png"
+        os.makedirs(os.path.dirname(save_best_path), exist_ok=True)
+        plt.savefig(save_best_path)
     else:
         plot_hist(energies_bg, energies_data, min_energy, ax=ax, label=label)
 
@@ -194,9 +214,9 @@ def main():
                         help='our_dynamics | schnet | simple_dynamics | kernel_dynamics | kernel_dynamics_inner | egnn_dynamics | gnn_dynamics')
     parser.add_argument('--n_data', type=int, default=100, help=100)
     parser.add_argument('--trace', type=str, default='hutch', help='hutch | exact')
-    parser.add_argument('--data', type=str, default='lj13', help='dw4 | lj13')
+    parser.add_argument('--data', type=str, default='dw4', help='dw4 | lj13')
     parser.add_argument('--plot', type=bool, default=False)
-    parser.add_argument('--model_num_list', nargs='+',type=int, default='0')  
+    parser.add_argument('--model_names', nargs='+',type=str)   
 
     args = parser.parse_args()
 
@@ -236,7 +256,7 @@ def main():
         print(f"\nTest results saved to {results_file}")
     else:
         print("plotting...")
-        fig, ax = plt.subplots()
+        # fig, ax = plt.subplots()
         prior = PositionPrior()
         samples = 10000
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -264,16 +284,15 @@ def main():
             # data, target = dw4_data_and_target()
             # label = os.path.basename(model_path)[0]
             # plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=ax, label=label)
-        for model_num in args.model_num_list:       
-            model_path = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}/{model_num}.pth"
+        for model_name in args.model_names:       
+            model_path = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}/{model_name}.pth"
             flow = load_and_test_model(args, model_path, n_particles, n_dims)
             data, target = dw4_data_and_target()
-            label = f'Generated samples - model_{model_num}'
-            plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=ax, label=label)
+            plot_generating_flow(args, data, flow, prior, target, latent, samples, model_name)
 
-            save_best_path = f"generated_hists/model_{model_num}.png"
-            os.makedirs(os.path.dirname(save_best_path), exist_ok=True)
-            plt.savefig(save_best_path)
+            # save_best_path = f"final_generated_hists/model_{model_name}.png"
+            # os.makedirs(os.path.dirname(save_best_path), exist_ok=True)
+            # plt.savefig(save_best_path)
         print('done')
 
 
