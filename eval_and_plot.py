@@ -186,8 +186,8 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, model
             linewidth=4,
             label='True Samples');
     
-        # plt.hist(energies_bg, bins=100, density=True, range=(min_energy, 0), alpha=0.4, histtype='step', linewidth=4,
-        # color="b", label="Final Weighted Samples", weights=np.exp(-log_w));
+        plt.hist(energies_bg, bins=100, density=True, range=(min_energy, 0), alpha=0.4, histtype='step', linewidth=4,
+            color="b", label="Final Weighted Samples", weights=np.exp(-log_w));
 
         plt.xlabel("u(x)", fontsize=10)
         # plt.xticks([...])
