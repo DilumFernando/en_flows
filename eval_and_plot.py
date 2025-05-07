@@ -263,6 +263,7 @@ def main():
         samples = 10000
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         latent = prior.sample(size=[samples, 4, 2], device=device)
+        lambs = [0.1, 0.3, 0.5]
         # saved_models_dir = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}"
         # saved_models_dir = os.path.join(os.getcwd(), models_path)
 
@@ -287,10 +288,11 @@ def main():
             # label = os.path.basename(model_path)[0]
             # plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=ax, label=label)
         for model_name in args.model_names:       
-            model_path = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}/{model_name}_final.pth"
-            flow = load_and_test_model(args, model_path, n_particles, n_dims)
-            data, target = dw4_data_and_target()
-            plot_generating_flow(args, data, flow, prior, target, latent, samples, model_name)
+            for lamb in lambs:
+                model_path = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}/{model_name}_lamb_{lamb}.pth"
+                flow = load_and_test_model(args, model_path, n_particles, n_dims)
+                data, target = dw4_data_and_target()
+                plot_generating_flow(args, data, flow, prior, target, latent, samples, model_name)
 
             # save_best_path = f"final_generated_hists/model_{model_name}.png"
             # os.makedirs(os.path.dirname(save_best_path), exist_ok=True)
