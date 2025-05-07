@@ -156,7 +156,7 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, model
     
     # Changes based on the flow type (Diffeq for kernel/new and FFJORD for egnn) 
     if "kernel" or "new" in args.model:
-        x, dlogp = flow(latent)
+        x, dlogp = flow(latent, inverse=True)
         x = x.view(samples, -1)
     else:
         sampling = True
@@ -287,7 +287,7 @@ def main():
             # label = os.path.basename(model_path)[0]
             # plot_generating_flow(args, data, flow, prior, target, latent, samples, ax=ax, label=label)
         for model_name in args.model_names:       
-            model_path = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}/{model_name}.pth"
+            model_path = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}/{model_name}_final.pth"
             flow = load_and_test_model(args, model_path, n_particles, n_dims)
             data, target = dw4_data_and_target()
             plot_generating_flow(args, data, flow, prior, target, latent, samples, model_name)
