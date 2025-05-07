@@ -53,8 +53,8 @@ parser.add_argument('--weight_decay', type=float, default=1e-12,
 parser.add_argument('--ode_regularization', type=float, default=0)
 parser.add_argument('--x_aggregation', type=str, default='sum',
                     help='sum | mean')
-parser.add_argument('model_name', type=str, default='0')
-parser.add_argument('lamb', type=float, default=0.0)
+parser.add_argument('--model_name', type=str, default='0')
+parser.add_argument('--lamb', type=float, default=0.0)
 
 args, unparsed_args = parser.parse_known_args()
 if args.model == 'kernel_dynamics' and args.data == 'lj13':
@@ -194,8 +194,8 @@ def main():
                 loss, nll, reg_term, mean_abs_z = losses.compute_loss_and_nll(args, flow, prior, batch)
             # standard nll from forward KL
 
-            if epoch%10 == 0:
-                plot_generating_flow(args, data, flow, prior, target, latent, samples, epoch=epoch)
+            # if epoch%10 == 0:
+                # plot_generating_flow(args, data, flow, prior, target, latent, samples, epoch=epoch)
 
             loss.backward()
             # Compute and store gradient statistics
