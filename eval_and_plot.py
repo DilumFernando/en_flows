@@ -190,14 +190,16 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, model
         # color="b", label="Final Weighted Samples", weights=np.exp(-log_w));
 
         plt.xlabel("u(x)", fontsize=10)
-        plt.xticks([...])
-        plt.yticks([...]) 
+        # plt.xticks([...])
+        # plt.yticks([...]) 
         plt.title('Energy Histogram')
         plt.legend(fontsize=10)
 
         save_best_path = f"final_generated_hists/model_{model_name}.png"
         os.makedirs(os.path.dirname(save_best_path), exist_ok=True)
         plt.savefig(save_best_path)
+
+        plt.close()
     else:
         plot_hist(energies_bg, energies_data, min_energy, ax=ax, label=label)
 
