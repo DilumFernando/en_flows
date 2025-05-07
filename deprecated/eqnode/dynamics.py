@@ -898,8 +898,8 @@ class KernelDynamics_inner_old(torch.nn.Module):
 
         eps = 1e-6
 
-        # d = (norms - 2 * inner_prods + norms.permute(0, 2, 1) + eps).sqrt()  #kohler
-        d = (norms + norms.permute(0, 2, 1)).sqrt() ## norms
+        d = (norms - 2 * inner_prods + norms.permute(0, 2, 1) + eps).sqrt()  #kohler
+        # d = (norms + norms.permute(0, 2, 1)).sqrt() ## norms
         # d = (torch.square(inner_prods) + eps).sqrt() ## pos_inner_prod
         # d = -2 * inner_prods ## neg_inner_prod
         # d = sums + sums.permute(0, 2, 1) ## sums_perm
