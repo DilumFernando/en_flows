@@ -898,11 +898,11 @@ class KernelDynamics_inner_old(torch.nn.Module):
 
         eps = 1e-6
 
-        d = (norms - 2 * inner_prods + norms.permute(0, 2, 1) + eps).sqrt()  #kohler
+        # d = (norms - 2 * inner_prods + norms.permute(0, 2, 1) + eps).sqrt()  #kohler
         # d = (norms + norms.permute(0, 2, 1)).sqrt() ## norms
         # d = (torch.square(inner_prods) + eps).sqrt() ## pos_inner_prod
         # d = -2 * inner_prods ## neg_inner_prod
-        # d = sums + sums.permute(0, 2, 1) ## sums_perm
+        d = sums + sums.permute(0, 2, 1) ## sums_perm
 
         mask = ~torch.eye(self._n_particles, device=x.device, dtype=torch.bool).expand(n_batch, -1, -1)
         d = (d[mask].view(n_batch, self._n_particles, self._n_particles - 1).unsqueeze(dim=-1))

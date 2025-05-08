@@ -179,10 +179,10 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, model
                 # color="r", label="True samples");
         # plot_hist(energies_bg, energies_data, min_energy)
 
-        plt.hist(energies_bg, bins=100, density=True, range=(min_energy, 50), alpha=0.4, histtype='step', linewidth=1,
+        plt.hist(energies_bg, bins=100, density=True, range=(min_energy, 0), alpha=0.4, histtype='step', linewidth=1,
                 color="r", label="Generated Samples");
 
-        plt.hist(energies_data, bins=100, density=True, range=(min_energy, 50),  alpha=0.4, color="g", histtype='step',
+        plt.hist(energies_data, bins=100, density=True, range=(min_energy, 0),  alpha=0.4, color="g", histtype='step',
             linewidth=4,
             label='True Samples');
     
@@ -264,7 +264,7 @@ def main():
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         latent = prior.sample(size=[samples, 4, 2], device=device)
         # lambs = [0.0]
-        lambs = [0.1, 0.3, 0.5]
+        lambs = [0.0, 0.1, 0.3, 0.5]
         # saved_models_dir = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}"
         # saved_models_dir = os.path.join(os.getcwd(), models_path)
 
