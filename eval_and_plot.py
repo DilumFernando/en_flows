@@ -156,7 +156,7 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, model
     
     # Changes based on the flow type (Diffeq for kernel/new and FFJORD for egnn) 
     if "kernel" or "new" in args.model:
-        x, dlogp = flow(latent, inverse=True)
+        x, dlogp = flow(latent, inverse=False)
         x = x.view(samples, -1)
     else:
         sampling = True
