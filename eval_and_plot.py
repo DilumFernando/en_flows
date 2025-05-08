@@ -263,8 +263,8 @@ def main():
         samples = 10000
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         latent = prior.sample(size=[samples, 4, 2], device=device)
-        # lambs = [0.0]
-        lambs = [0.0, 0.1, 0.3, 0.5]
+        lambs = [0.0]
+        # lambs = [0.0, 0.1, 0.3, 0.5]
         # saved_models_dir = f"{model_dir}/best_model_{args.model}/n_data_{args.n_data}"
         # saved_models_dir = os.path.join(os.getcwd(), models_path)
 
