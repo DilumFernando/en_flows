@@ -169,7 +169,7 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, model
     energies_bg = target.energy(x).cpu().detach().view(-1).numpy()
     energies_prior = target.energy(latent).cpu().detach().numpy()
     min_energy = min(energies_data.min(), energies_bg.min())
-    # max_energy = max(energies_data.max(), energies_bg.max())
+    max_energy = max(energies_data.max(), energies_bg.max())
 
     log_w = target.energy(x).view(-1) - prior(latent.view(samples, 4, 2)).view(-1) + dlogp.view(-1)
     log_w = log_w.view(-1).cpu().detach()
@@ -179,14 +179,14 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, model
                 # color="r", label="True samples");
         # plot_hist(energies_bg, energies_data, min_energy)
 
-        plt.hist(energies_bg, bins=100, density=True, range=(min_energy, 0), alpha=0.4, histtype='step', linewidth=1,
+        plt.hist(energies_bg, bins=100, density=True, range=(min_energy, 50), alpha=0.4, histtype='step', linewidth=1,
                 color="r", label="Generated Samples");
 
-        plt.hist(energies_data, bins=100, density=True, range=(min_energy, 0),  alpha=0.4, color="g", histtype='step',
+        plt.hist(energies_data, bins=100, density=True, range=(min_energy, 50),  alpha=0.4, color="g", histtype='step',
             linewidth=4,
             label='True Samples');
     
-        plt.hist(energies_bg, bins=100, density=True, range=(min_energy, 0), alpha=0.4, histtype='step', linewidth=4,
+        plt.hist(energies_bg, bins=100, density=True, range=(min_energy, 50), alpha=0.4, histtype='step', linewidth=4,
             color="b", label="Final Weighted Samples", weights=np.exp(-log_w));
 # 
         plt.xlabel("u(x)", fontsize=10)
@@ -240,7 +240,7 @@ def main():
             # f.write(f"\n### Testing Results for Model: {args.model}, Data: {args.data} ###\n")
 
             for n_data in args.n_data_list:
-                if 'inner' in args.model:
+                if 'inner' in args.model: 
                     model_path = f"{model_dir}/best_model_corrected_inner_n_data_{n_data}.pth"
                 else:
                     model_path = f"{model_dir}/best_model_n_data_{n_data}.pth"
