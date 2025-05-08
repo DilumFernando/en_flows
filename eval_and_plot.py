@@ -156,7 +156,7 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, model
     
     # Changes based on the flow type (Diffeq for kernel/new and FFJORD for egnn) 
     if "kernel" or "new" in args.model:
-        x, dlogp = flow(latent, inverse=True)
+        x, dlogp = flow(latent, inverse=False)
         x = x.view(samples, -1)
     else:
         sampling = True
@@ -186,8 +186,8 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, model
             linewidth=4,
             label='True Samples');
     
-        # plt.hist(energies_bg, bins=100, density=True, range=(min_energy, 50), alpha=0.4, histtype='step', linewidth=4,
-            # color="b", label="Final Weighted Samples", weights=np.exp(-log_w));
+        plt.hist(energies_bg, bins=100, density=True, range=(min_energy, 50), alpha=0.4, histtype='step', linewidth=4,
+            color="b", label="Final Weighted Samples", weights=np.exp(-log_w));
 # 
         plt.xlabel("u(x)", fontsize=10)
         # plt.xticks([...])
