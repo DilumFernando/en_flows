@@ -186,8 +186,8 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, model
             linewidth=4,
             label='True Samples');
     
-        # plt.hist(energies_bg, bins=100, density=True, range=(min_energy, 50), alpha=0.4, histtype='step', linewidth=4,
-            # color="b", label="Final Weighted Samples", weights=np.exp(-log_w));
+        plt.hist(energies_bg, bins=100, density=True, range=(min_energy, 50), alpha=0.4, histtype='step', linewidth=4,
+            color="b", label="Final Weighted Samples", weights=np.exp(-log_w));
 # 
         plt.xlabel("u(x)", fontsize=10)
         # plt.xticks([...])
@@ -195,7 +195,7 @@ def plot_generating_flow(args, data, flow, prior, target, latent, samples, model
         plt.title('Energy Histogram')
         plt.legend(fontsize=10)
 
-        save_best_path = f"final_generated_hists/model_{model_name}_lamb_{lamb} .png"
+        save_best_path = f"final_generated_hists/model_{model_name}_lamb_{lamb}_with_weights.png"
         os.makedirs(os.path.dirname(save_best_path), exist_ok=True)
         plt.savefig(save_best_path)
 
